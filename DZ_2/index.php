@@ -1,6 +1,6 @@
 <?
 require('Headers.php');
-require('array.php');
+require('function.php');
 ini_set('display_errors', 1);
 ?>
 
@@ -99,8 +99,8 @@ ini_set('display_errors', 1);
       ],
       'grades'=>[
         'chemistry'=>'5',
-        'Biology'=>'4',
-        'Physics'=>'3'
+        'biology'=>'4',
+        'physics'=>'3'
       ]
     ];
     $students[]=[
@@ -111,8 +111,8 @@ ini_set('display_errors', 1);
       ],
       'grades'=>[
         'chemistry'=>'5',
-        'Biology'=>'5',
-        'Physics'=>'5'
+        'biology'=>'5',
+        'physics'=>'5'
       ]
     ];
     $students[]=[
@@ -123,8 +123,8 @@ ini_set('display_errors', 1);
       ],
       'grades'=>[
         'chemistry'=>'5',
-        'Biology'=>'3',
-        'Physics'=>'3'
+        'biology'=>'3',
+        'physics'=>'3'
       ]
     ];
     $students[]=[
@@ -135,17 +135,16 @@ ini_set('display_errors', 1);
       ],
       'grades'=>[
         'chemistry'=>'5',
-        'Biology'=>'5',
-        'Physics'=>'5'
+        'biology'=>'5',
+        'physics'=>'5'
       ]
     ];
-
      Printt($students);
-     for($i=0; $i<4; $i++){
-      echo "Фамилия: ".$students[$i]['info']['surname'];
-      $ball=0;
-      foreach($students[$i]['grades'] as $key=> $value){
-        $ball+=(int)$value;
+     for($i=0; $i<count($students); $i++){
+     	echo "Фамилия: ".$students[$i]['info']['surname'];
+     	$ball=0;
+    	foreach($students[$i]['grades'] as $key=> $value){
+        $ball+=$value;
       }
       echo " Средний балл: ", round($ball/3),"<br>";
      }
