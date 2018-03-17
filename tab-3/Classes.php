@@ -83,7 +83,7 @@ class TaskManager{
         foreach ($this->aTasks as $oTask){
             echo
             "<div>
-                <p>Задание №{$oTask->number}.<a href='/?task={$oTask->number}'> {$oTask->title}</a></p>
+                <p>Задание №{$oTask->number}.<a href='/tab-3/?task={$oTask->number}'> {$oTask->title}</a></p>
             </div>";
         }
     }
