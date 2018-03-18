@@ -232,7 +232,7 @@ class TaskFact extends TaskPrototype{
 
 class TaskFibonacci extends TaskPrototype{
 
-    public $n = 7 ;
+    public $n = 7;
 
     private function fibonacci($n){
         for ($i = 0, $k = 1; $j < $n; $i += $k, $k = $i - $k, $j++);
@@ -250,7 +250,7 @@ class TaskFibonacci extends TaskPrototype{
 
 class TaskArray extends TaskPrototype{
 
-    public $n = 7 ;
+    public $n = 7;
 
      protected function array($n){
         $arr = [];
@@ -263,7 +263,10 @@ class TaskArray extends TaskPrototype{
     }
 
     public function func(){
-       return $this->array($this->n);
+        $out[] = "Число n={$this->n}";
+        $out[] = "Массив:";
+        $out[]= implode ( ', ' , $this->array($this->n));
+        return $out;
     }
 }
 
@@ -286,6 +289,7 @@ class TaskArrayEvenOdd extends TaskArray{
         $arr = $this->array($this->n);
         $evOdd = $this->evenOdd($arr);
         
+        $out[] = "Число n={$this->n}";
         $out[] = "Исходный массив: ". implode ( ', ' ,  $arr);
         $out[] = "Четные: ". implode ( ', ' , $evOdd[0]);
         $out[] = "Нечетные: ". implode ( ', ' , $evOdd[1]);
@@ -355,6 +359,12 @@ class TaskCocktail extends TaskBubbles{
                 //$mas[$i]=$mass[0];
                 //$mas[$i+1]=$mass[1];
 
+                //решение без использования функции 
+                
+                //if ($mas[$i] > $mas[$i + 1]) { 
+                    //$mas[$i] = $mas[$i] + $mas[$i + 1] - ($mas[$i + 1] = $mas[$i]);
+                //} 
+
             }
 
             $last--; 
@@ -367,6 +377,12 @@ class TaskCocktail extends TaskBubbles{
                 //$mass=$this->bubblesAlg($mas[$i-1], $mas[$i]);
                 //$mas[$i-1]=$mass[0];
                 //$mas[$i]=$mass[1];
+
+                //решение без использования функции
+
+                //if ($mas[$i] < $mas[$i - 1]) { 
+                    //$mas[$i] = $mas[$i] + $mas[$i - 1] - ($mas[$i - 1] = $mas[$i]);
+               //} 
             }
 
             $first++; 
