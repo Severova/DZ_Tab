@@ -211,7 +211,9 @@ class TaskFact extends TaskPrototype{
     public $n = 5;
 
     private function fact($n){
-        if ($n === 0) {
+        if ($n < 0 ){         
+            return "Факториал определен только на множестве неотрицательных чисел!";
+        } elseif ($n === 0) {   
             return 1;
         } else {
             for ($i = 1, $factorial = 1; $i <= $n; $factorial *= $i, $i++);
@@ -235,7 +237,7 @@ class TaskFibonacci extends TaskPrototype{
     private function fibonacci($n){
         for ($i = 0, $k = 1; $j < $n; $i += $k, $k = $i - $k, $j++);
         
-        return  $i;
+        return $i;
     }
 
     public function func(){
@@ -254,7 +256,7 @@ class TaskArray extends TaskPrototype{
         $arr = [];
 
         for ($i = 0; $i < $n; $i++){
-            $arr[] = rand(0,500);
+            $arr[] = rand(0, 500);
         }
         
         return $arr;
@@ -277,11 +279,9 @@ class TaskArrayEvenOdd extends TaskArray{
             ($value % 2) ? $odd[] = $value : $even[] = $value;
         }
         
-        $evOdd[] = $even;
-        $evOdd[] = $odd;
-        
-        return  $evOdd;
+        return  [$even, $odd];
     }
+
     public function func(){
         $arr = $this->array($this->n);
         $evOdd = $this->evenOdd($arr);
@@ -298,28 +298,20 @@ class TaskBubbles extends TaskArray{
 
     public $n = 10;
     protected function bubblesAlg(&$a, &$b){
+        
         if ($a > $b) {
             $a = $a + $b - ($b = $a);
+            return true;//для шейкер-сортировки
         }
-        //return [$a, $b];
+        return false;//для шейкер-сортировки
     }
+
     private function bubbles($mas, $n){
        for ($i = 0; $i < $n - 1; $i++) {
             for ($j = $i + 1; $j < $n; $j++) {
                 $this->bubblesAlg($mas[$i], $mas[$j]);
-
-                //решение без использования жестких ссылок (нужно также убрать в функции знак & и раск return)
-                //$mass=$this->bubblesAlg($mas[$i], $mas[$j]);
-                //$mas[$i]=$mass[0];
-                //$mas[$j]=$mass[1];
-
-                //решение без использования функции:
-                //if ($mas[$i] > $mas[$j]) {
-                //   $mas[$i] = $mas[$i] + $mas[$j] - ($mas[$j] = $mas[$i]);
-                //}
             }
         }
-
         return $mas;
     }
 
@@ -335,42 +327,29 @@ class TaskBubbles extends TaskArray{
 
 class TaskCocktail extends TaskBubbles{
 
-    public $n = 10 ;
-    
+    public $n = 10;
     private function cocktail($mas){
         $first = 0; 
         $last = count($mas);
+        $flag = false;
 
-        while ($last > $first) { 
+        do { 
 
             for ($i = $first; $i < $last - 1; $i++) {   
-                $this->bubblesAlg($mas[$i], $mas[$i+1]);
-
-                //решение без использования жестких ссылок
-
-                //$mass=$this->bubblesAlg($mas[$i], $mas[$i+1]);
-                //$mas[$i]=$mass[0];
-                //$mas[$i+1]=$mass[1];
-
+                ($this->bubblesAlg($mas[$i], $mas[$i+1])) ? $flag = true: $flag = false;
             }
 
             $last--; 
 
             for ($i = $last - 1; $i > $first; $i--) { 
-                $this->bubblesAlg($mas[$i-1], $mas[$i]);
-
-                //решение без использования жестких ссылок
-
-                //$mass=$this->bubblesAlg($mas[$i-1], $mas[$i]);
-                //$mas[$i-1]=$mass[0];
-                //$mas[$i]=$mass[1];
+                ($this->bubblesAlg($mas[$i-1], $mas[$i])) ? $flag = true: $flag = false;
             }
 
             $first++; 
-        } 
+        } while ($flag);
         
         return $mas;
-    }
+    } 
 
     public function func(){
         $arr = $this->array($this->n);
