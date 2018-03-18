@@ -297,19 +297,31 @@ class TaskArrayEvenOdd extends TaskArray{
 class TaskBubbles extends TaskArray{
 
     public $n = 10;
-    protected function bubblesAlg(&$a, &$b){
-        
+    protected function bubblesAlg(&$a, &$b){// жесткие ссылки - зло (2 лекция) привожу также решение без них, 
+                                            // и решение без функции
+                                            // решение с жесткими ссылками сделала для общего развития :)
         if ($a > $b) {
             $a = $a + $b - ($b = $a);
-            return true;//для шейкер-сортировки
         }
-        return false;//для шейкер-сортировки
+        //return [$a, $b];
     }
 
     private function bubbles($mas, $n){
        for ($i = 0; $i < $n - 1; $i++) {
             for ($j = $i + 1; $j < $n; $j++) {
                 $this->bubblesAlg($mas[$i], $mas[$j]);
+
+                //решение без использования жестких ссылок (нужно также убрать в функции знак & и раск. return)
+
+                //$mass=$this->bubblesAlg($mas[$i], $mas[$j]);
+                //$mas[$i]=$mass[0];
+                //$mas[$j]=$mass[1];
+
+                //решение без использования функции:
+
+                //if ($mas[$i] > $mas[$j]) {
+                //   $mas[$i] = $mas[$i] + $mas[$j] - ($mas[$j] = $mas[$i]);
+                //}
             }
         }
         return $mas;
@@ -331,22 +343,34 @@ class TaskCocktail extends TaskBubbles{
     private function cocktail($mas){
         $first = 0; 
         $last = count($mas);
-        $flag = false;
 
-        do { 
+        while ($last > $first) { 
 
             for ($i = $first; $i < $last - 1; $i++) {   
-                ($this->bubblesAlg($mas[$i], $mas[$i+1])) ? $flag = true: $flag = false;
+                $this->bubblesAlg($mas[$i], $mas[$i+1]);
+
+                //решение без использования жестких ссылок
+
+                //$mass=$this->bubblesAlg($mas[$i], $mas[$i+1]);
+                //$mas[$i]=$mass[0];
+                //$mas[$i+1]=$mass[1];
+
             }
 
             $last--; 
 
             for ($i = $last - 1; $i > $first; $i--) { 
-                ($this->bubblesAlg($mas[$i-1], $mas[$i])) ? $flag = true: $flag = false;
+                $this->bubblesAlg($mas[$i-1], $mas[$i]);
+
+                //решение без использования жестких ссылок
+
+                //$mass=$this->bubblesAlg($mas[$i-1], $mas[$i]);
+                //$mas[$i-1]=$mass[0];
+                //$mas[$i]=$mass[1];
             }
 
             $first++; 
-        } while ($flag);
+        }
         
         return $mas;
     } 
