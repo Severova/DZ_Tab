@@ -13,7 +13,7 @@ class TaskManager{
         [
             'title' => 'Сумма чисел',
             'description' => 'Посчитать сумму двух чисел',
-            'class' => TaskSumm::class
+            'class' => TaskSumm::class//само имя класса
         ],
         [
             'title' => 'Разность чисел',
@@ -66,10 +66,11 @@ class TaskManager{
 
     function __construct()
     {
-        $iTask = isset($_GET['task'])? $_GET['task'] : false;
-        foreach ($this->sConfigTasks as $key => $item) {
-            if (isset($item['class']) && class_exists($item['class'])) {
-                $this->aTasks[$key+1] = new $item['class'] (array_merge($item,['number' => $key+1]));
+        $iTask = isset($_GET['task'])? $_GET['task'] : false;//в itask номер номера
+        foreach ($this->sConfigTasks as $key => $item) {//пробираем большой массив
+            if (isset($item['class']) && class_exists($item['class'])) {//если чущ класс и он был объявлен
+                $this->aTasks[$key+1] = new $item['class'] (array_merge($item,['number' => $key+1]));//в atasks добавляем
+                //новый экземпляр текущего класса с параметрами взятыми из большого масива и с сделанным номером кey+1
             }
             else{
                 $this->aTasks[$key+1] = new TaskExample(array_merge($item,['number' => $key+1]));
@@ -111,10 +112,11 @@ abstract class  TaskPrototype
     public function __construct($params = [])
     {
         foreach ($params as $key => $value){
-            if (property_exists(self::class,$key))
+            if (property_exists(self::class, $key))
                 $this->$key = $value;
         }
 
+        $this->params = $params;
     }
 
     /**
@@ -250,29 +252,38 @@ class TaskFibonacci extends TaskPrototype{
 
 class TaskArray extends TaskPrototype{
 
-    public $n = 7;
+     public function __construct($params = [], $n = 8)
+    {
+        $this->params = $params;
+        parent::__construct($params);
 
-     protected function array($n){
         $arr = [];
-
-        for ($i = 0; $i < $n; $i++){
+        
+        for ($i = 0; $i < $n; $i++) {
             $arr[] = rand(0, 500);
         }
-        
-        return $arr;
-    }
 
+        $this->n=$n;
+        $this->arr=$arr;
+    }
+     
     public function func(){
         $out[] = "Число n={$this->n}";
         $out[] = "Массив:";
-        $out[]= implode ( ', ' , $this->array($this->n));
+        $out[]= implode ( ', ', $this->arr);
+
         return $out;
     }
 }
 
 class TaskArrayEvenOdd extends TaskArray{
 
-    public $n = 10;
+    public function __construct($params = [])
+    {
+        $this->params = $params;
+        parent::__construct($params, 10);
+    }
+
 
     private function evenOdd($mas){
         $odd = [];
@@ -286,12 +297,11 @@ class TaskArrayEvenOdd extends TaskArray{
     }
 
     public function func(){
-        $arr = $this->array($this->n);
-        $evOdd = $this->evenOdd($arr);
+        $evOdd = $this->evenOdd($this->arr);
         
         $out[] = "Число n={$this->n}";
-        $out[] = "Исходный массив: ". implode ( ', ' ,  $arr);
-        $out[] = "Четные: ". implode ( ', ' , $evOdd[0]);
+        $out[] = "Исходный массив: ". implode ( ', ' ,  $this->arr);
+        $out[] = "Четные: ". implode ( ', ', $evOdd[0]);
         $out[] = "Нечетные: ". implode ( ', ' , $evOdd[1]);
         
         return $out;
@@ -300,42 +310,31 @@ class TaskArrayEvenOdd extends TaskArray{
 
 class TaskBubbles extends TaskArray{
 
-    public $n = 10;
-    protected function bubblesAlg(&$a, &$b){// жесткие ссылки - зло (2 лекция) привожу также решение без них, 
-                                            // и решение без функции
-                                            // решение с жесткими ссылками сделала для общего развития :)
+     public function __construct($params = [])
+    {
+        $this->params = $params;
+        parent::__construct($params, 5);
+    }
+
+    protected function bubblesAlg(&$a, &$b){ 
         if ($a > $b) {
             $a = $a + $b - ($b = $a);
         }
-        //return [$a, $b];
     }
 
     private function bubbles($mas, $n){
        for ($i = 0; $i < $n - 1; $i++) {
             for ($j = $i + 1; $j < $n; $j++) {
                 $this->bubblesAlg($mas[$i], $mas[$j]);
-
-                //решение без использования жестких ссылок (нужно также убрать в функции знак & и раск. return)
-
-                //$mass=$this->bubblesAlg($mas[$i], $mas[$j]);
-                //$mas[$i]=$mass[0];
-                //$mas[$j]=$mass[1];
-
-                //решение без использования функции:
-
-                //if ($mas[$i] > $mas[$j]) {
-                //   $mas[$i] = $mas[$i] + $mas[$j] - ($mas[$j] = $mas[$i]);
-                //}
             }
         }
         return $mas;
     }
 
     public function func(){
-        $arr = $this->array($this->n);
 
-        $out[] = "Исходный массив: ". implode ( ', ' ,  $arr);
-        $out[] = "Отсортированный массив: ". implode ( ', ' , $this->bubbles($arr, $this->n));
+        $out[] = "Исходный массив: ". implode ( ', ' ,  $this->arr);
+        $out[] = "Отсортированный массив: ". implode ( ', ' , $this->bubbles($this->arr, $this->n));
 
         return $out;
     }
@@ -343,7 +342,12 @@ class TaskBubbles extends TaskArray{
 
 class TaskCocktail extends TaskBubbles{
 
-    public $n = 10;
+    public function __construct($params = [])
+    {
+        $this->params = $params;
+        TaskArray::__construct($params, 6);
+    }
+
     private function cocktail($mas){
         $first = 0; 
         $last = count($mas);
@@ -352,37 +356,12 @@ class TaskCocktail extends TaskBubbles{
 
             for ($i = $first; $i < $last - 1; $i++) {   
                 $this->bubblesAlg($mas[$i], $mas[$i+1]);
-
-                //решение без использования жестких ссылок
-
-                //$mass=$this->bubblesAlg($mas[$i], $mas[$i+1]);
-                //$mas[$i]=$mass[0];
-                //$mas[$i+1]=$mass[1];
-
-                //решение без использования функции 
-                
-                //if ($mas[$i] > $mas[$i + 1]) { 
-                    //$mas[$i] = $mas[$i] + $mas[$i + 1] - ($mas[$i + 1] = $mas[$i]);
-                //} 
-
             }
 
             $last--; 
 
             for ($i = $last - 1; $i > $first; $i--) { 
                 $this->bubblesAlg($mas[$i-1], $mas[$i]);
-
-                //решение без использования жестких ссылок
-
-                //$mass=$this->bubblesAlg($mas[$i-1], $mas[$i]);
-                //$mas[$i-1]=$mass[0];
-                //$mas[$i]=$mass[1];
-
-                //решение без использования функции
-
-                //if ($mas[$i] < $mas[$i - 1]) { 
-                    //$mas[$i] = $mas[$i] + $mas[$i - 1] - ($mas[$i - 1] = $mas[$i]);
-               //} 
             }
 
             $first++; 
@@ -392,10 +371,10 @@ class TaskCocktail extends TaskBubbles{
     } 
 
     public function func(){
-        $arr = $this->array($this->n);
+        $arr = $this->arr;
 
-        $out[] = "Исходный массив: ". implode ( ', ' ,  $arr);
-        $out[] = "Отсортированный массив: ". implode ( ', ' , $this->cocktail($arr, $this->n));
+        $out[] = "Исходный массив: ". implode ( ', ' ,  $this->arr);
+        $out[] = "Отсортированный массив: ". implode ( ', ' , $this->cocktail($this->arr, $this->n));
 
         return $out;
     }
