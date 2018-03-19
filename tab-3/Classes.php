@@ -254,11 +254,10 @@ class TaskArray extends TaskPrototype{
 
      public function __construct($params = [], $n = 8)
     {
-        $this->params = $params;
         parent::__construct($params);
 
         $arr = [];
-        
+
         for ($i = 0; $i < $n; $i++) {
             $arr[] = rand(0, 500);
         }
@@ -280,7 +279,6 @@ class TaskArrayEvenOdd extends TaskArray{
 
     public function __construct($params = [])
     {
-        $this->params = $params;
         parent::__construct($params, 10);
     }
 
@@ -312,7 +310,6 @@ class TaskBubbles extends TaskArray{
 
      public function __construct($params = [])
     {
-        $this->params = $params;
         parent::__construct($params, 5);
     }
 
@@ -344,7 +341,6 @@ class TaskCocktail extends TaskBubbles{
 
     public function __construct($params = [])
     {
-        $this->params = $params;
         TaskArray::__construct($params, 6);
     }
 
