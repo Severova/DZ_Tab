@@ -1,110 +1,212 @@
 <?php 
-	abstract class PrototypeEssence 
-	{
-		public function __construct ($params = []) 
-		{
-			foreach ($params as $key => $value){
-                $this->$key = $value;
-        	}
-		}
+/**
+ * Class Object
+ * @property int $id
+ */
+abstract class Object{
+	 /** @var  PDO */
+	static $db;
+    protected $attributes = [];
 
-		public function receiveAtr()
-		{
-			//взять данные из таблицы
-		}
+	public function __construct( $params = [])
+    {
 
-		public function writeСortege($params = [], $mysqli)//записать в таблицу
-		{
-			$query = "INSERT INTO ". static::class ." VALUES ('DEFAULT ";
+        foreach ($params as $param_name => $param_value){
+            if (property_exists(static::class, $param_name ))
+                $this->$param_name = $param_value;
+            else{
+                $sFuncName = 'set'.ucfirst($param_name);
+                //if (method_exists($this,$sFuncName ))
+                    $this->$sFuncName($param_value);
+            }
+        }
+    }
 
-			 foreach ($params as $key => $value){
-                $query.= "', '$value";
-        	}
-        	$query.= "')";
+    public function __get($name)
+    {
+        $sFuncName = 'get'.ucfirst($name);
+        if (method_exists($this,$sFuncName))
+            return $this->$sFuncName();
 
-        	$mysqli->query($query);
-		}
+        return null;
+    }
 
-		public function updateСortege()//обновить запись в таблице
-		{
-			
-		}
+    public function __set($name,$value)
+    {
+        $sFuncName = 'set'.ucfirst($name);
+        if (method_exists($this,$sFuncName))
+            $this->$sFuncName($value);
+    }
 
-		public function deleteСortege()
-		{
-			//удалить из бд
-		}
-	}
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        return isset($this->attributes['id'])? $this->attributes['id'] : null;
+    }
 
-	class ModelAuto extends PrototypeEssence {
 
-		protected $idModel;
+    /**
+     * @param int $id
+     * @return $this
+     */
+    public function setId($id)
+    {
+        $this->attributes['id'] = $id;
+        return $this;
+
+    }
+
+    static function TableName(){
+
+        return static::class;
+    }
+
+    /**
+     * @param integer $id
+     * @return static
+     */
+    public static function findById($id){
+
+        $table = static::TableName();
+
+        $oQuery = Object::$db->prepare("SELECT * FROM {$table} WHERE id=:need_id");
+        $oQuery->execute(['need_id' => $id]);
+        $aRes = $oQuery->fetch(PDO::FETCH_ASSOC);
+
+        return $aRes? new static($aRes):null;
+    }
+
+    protected function insert(){
+        $table = static::TableName();
+        $aLabels = [];
+        $aValues = [];
+        foreach ( $this->attributes as $name => $value){
+            $aLabels[] = $name;
+            $aValues[] = ':'.$name;
+        }
+        $sLabels = implode(',',$aLabels);
+        $sValues = implode(',',$aValues);
+        $query = self::$db->prepare("INSERT INTO  {$table} ({$sLabels}) VALUES ($sValues) ");
+        $query->execute($this->attributes);
+
+        if ($iId = self::$db->lastInsertId())
+            $this->setId($iId);
+    }
+
+    protected function update(){
+        $table = static::TableName();
+        $aUpdates = [];
+        foreach ( $this->attributes as $name => $value){
+            if ($name == 'id') continue;
+            $aUpdates[] = $name.'=:'.$name;
+        }
+        $sUpdates = implode(', ',$aUpdates);
+        $query = self::$db->prepare("UPDATE  {$table} SET {$sUpdates} WHERE id=:id");
+        $query->execute($this->attributes);
+
+
+    }
+
+    public function save(){
+        if ($this->id)
+            $this->update();
+        else
+            $this->insert();
+    }
+
+    public function __call($methodName, $params)
+    {
+    	$methodPrefix = substr($methodName, 0, 3);
+        $name = lcfirst(substr($methodName, 3));
+
+        if ($methodPrefix == 'set')
+        {
+        	$value = $params[0];
+            $this->attributes[$name] = $value;
+
+            return $this;
+
+        }
+        elseif ($methodPrefix == 'get')
+        {	
+            return isset($this->attributes[$name])? $this->attributes[$name] : null;
+        }
+       
+    }
+
+}
+
+	class ModelAuto extends Object {
+		/*protected $idModel;
 		protected $idBrend;
 		protected $idBodyAuto;
 		protected $idTransmission;
-		protected $nameModel;
+		protected $nameModel;*/
 
+
+    }
+
+	class Deposit extends Object {
+
+		/*protected $idDeposit;
+		protected $idPrise;
+		protected $priseDeposit;*/
 	}
 
-	class Deposit extends PrototypeEssence {
+	class PriseModel extends Object {
 
-		protected $idDeposit;
-		protected $idPrise;
-		protected $priseDeposit;
-	}
-
-	class PriseModel extends PrototypeEssence {
-
-		protected $idPrise;
+		/*protected $idPrise;
 		protected $idModel;
-		protected $prise;
+		protected $prise;*/
 	}
 
 
-	class BrendAuto extends PrototypeEssence {
+	class BrendAuto extends Object {
 
-		protected $idBrend;
-		protected $nameBrend;
+		/*protected $idBrend;
+		protected $nameBrend;*/
 	}
 
-	class Transmission extends PrototypeEssence {
+	class Transmission extends Object {
 
-		protected $idTransmission;
-		protected $type;
+		/*protected $idTransmission;
+		protected $type;*/
 	}
 
-	class BodyAuto extends PrototypeEssence {
+	class BodyAuto extends Object {
 
-		protected $idBodyAuto;
-		protected $typeBodyAuto;
+		/*protected $idBodyAuto;
+		protected $typeBodyAuto;*/
 
 	}
 
-	class AdditionalOption extends PrototypeEssence {
+	class AdditionalOption extends Object {
 
-		protected $idOption;
+		/*protected $idOption;
 		protected $idModel;
 		protected $nameOptions;
 		protected $price;
-		protected $description;
+		protected $description;*/
 	}
 
-	class Discount extends PrototypeEssence {
+	class Discount extends Object {
 
-		protected $idDiscount;
+		/*protected $idDiscount;
 		protected $persent;
 		protected $idModel;
-		protected $description;
+		protected $description;*/
 
 	}
 
-	class Auto extends PrototypeEssence {
+	class Auto extends Object {
 
-		protected $idAuto;
+		/*protected $idAuto;
 		protected $idModel;
 		protected $stateNumber;
 		protected $status;
-		protected $description;
+		protected $description;*/
 
 		private function Status() {
 			//вычисляем занята или свободна машинка в зависимости от даты 
@@ -112,26 +214,25 @@
 		}
 	}
 
-	class ImageAuto extends PrototypeEssence {
+	class ImageAuto extends Object {
 
-		protected $idImageAuto;
+		/*protected $idImageAuto;
 		protected $idAuto;
-		protected $imgAuto;
+		protected $imgAuto;*/
 	}
 
-	class InsuranceAuto extends PrototypeEssence {
+	class InsuranceAuto extends Object {
 
-		protected $idInsuranceAuto;
+		/*protected $idInsuranceAuto;
 		protected $numberInsPolicy;
 		protected $dateInsEnd;
 		protected $dateToEnd;
-		protected $idAuto;
+		protected $idAuto;*/
 	}
 
-	class RentalContract extends PrototypeEssence {
+	class RentalContract extends Object {
 
-		protected $idRentalContract;
-		protected $idClient;
+		/*protected $idClient;
 		protected $idAuto;
 		protected $conclusionDate;
 		protected $receiptAutoDate;
@@ -140,18 +241,19 @@
 		protected $returnDate;
 		protected $returnTime;
 		protected $placeReturn;
-		protected $summ;
+		protected $summ = 0;*/
 
 
-		private function Summ() {
+		private function SummAdd() {
 			//вычисление итоговой суммы исходя из стоимости авто, залога, 
 			//а также выбранных дополнительных опций, скидки
+			
 		}
 	}
 
-	class Client extends PrototypeEssence {
+	class Client extends Object {
 
-		protected $idClient;
+		/*protected $idClient;
 		protected $name;
 		protected $surname;
 		protected $patronymic;
@@ -162,56 +264,58 @@
 		protected $passportSeries;
 		protected $passportIssuedBy;
 		protected $dob;
-		protected $regAddress;
+		protected $regAddress;*/
 	}
 
-	class SelectOption extends PrototypeEssence {
+	class SelectOption extends Object {
 
-		protected $idSelectOption;
+		/*protected $idSelectOption;
 		protected $idRcontract;
-		protected $idOption;
+		protected $idOption;*/
 
 	}
 
-	class ActPP extends PrototypeEssence {
+	class ActPP extends Object {
 
-		protected $idAct;
-		protected $idRcontract;
-		protected $dateAct;
-		protected $sumFinesGibdd;
-		protected $sumFines;
+		//protected $idRcontract;
+		//protected $dateAct=0;
+		//protected $idFineTime;
+		//protected $sumFinesGibdd;
+		//protected $sumFines=0;
 
-		private function sumFines() {
+		private $sum;
+
+		public function sumFinesAdd() {
 			//сумма складывается из штрафов за гибдд и из штрафа за нарушение срока
 			//который свою очередь вычисляется след образом: высчитывается продолжительность задержки авто
-			//(дата возврата авто по договору - дата акта возврата авто) из таблицы штрафа за нарушение сроков выбирается штраф
+			//(дата возврата авто по договору - дата акта возврата авто) из таблицы штрафа за нарушение сроков выбирается штра
+			
 		}
 	}
 
-	class FineTime extends PrototypeEssence {
+	class FineTime extends Object {
 
-		protected $idFineTime;
-		protected $amountDays;
-		protected $summ;
-
-	}
-
-	class pages extends PrototypeEssence {
-
-		protected $idPages;
-		protected $pageTitle;
-		protected $text;
+		/*
+		protected $summ;*/
 
 	}
 
-	class Reviews extends PrototypeEssence {
+	
+	class Pages extends Object {
 
-		protected $idReviews;
-		protected $userName;
+		//protected $pageTitle;
+		//protected $text;
+	}
+
+	
+	class Reviews extends Object {
+		
+		/*protected $userName;
 		protected $titleReviews;
 		protected $text;
 		protected $date;
 		protected $time;
-		protected $email;
+		protected $email;*/
 
+    	
 	}
