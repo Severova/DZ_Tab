@@ -60,7 +60,7 @@ abstract class Object{
 
     static function TableName(){
 
-        return static::class;
+        return strtolower(static::class);
     }
 
     /**
@@ -78,16 +78,58 @@ abstract class Object{
         return $aRes? new static($aRes):null;
     }
 
+    public static function findLineByCategory($what, $toWhich){
+
+        $table = static::TableName();
+
+        $oQuery = Object::$db->prepare("SELECT * FROM {$table} WHERE $what=:need_what");
+        $oQuery->execute(['need_what' => $toWhich]);
+        $aRes = $oQuery->fetch(PDO::FETCH_ASSOC);
+
+        return $aRes? new static($aRes):null;
+    }
+
+    public static function getListByCategory($category, $what, $toWhich){
+
+        $table = static::TableName();
+
+        $oQuery = Object::$db->prepare("SELECT $category FROM {$table} WHERE $what=:need_what");
+        $oQuery->execute(['need_what' => $toWhich]);
+        $aRes = $oQuery->fetchAll(PDO::FETCH_COLUMN);
+
+        return count($aRes)>1? $aRes : $aRes[0];
+    }
+
+    public static function getListObjectByCategory ($category, $what, $toWhich){
+
+       $aRes = static::getListByCategory($category, $what, $toWhich);
+        
+        if (count($aRes) > 1){
+            foreach ($aRes as $value) { 
+                $results[] = new static(static::findLineByCategory($category, $value));
+            } 
+        } elseif (count($aRes) == 0) {
+            return null;
+        } else {
+            $results[] = new static(static::findLineByCategory($category, $aRes));
+        }
+
+        return $results;
+    }
+
     protected function insert(){
         $table = static::TableName();
         $aLabels = [];
         $aValues = [];
+
         foreach ( $this->attributes as $name => $value){
             $aLabels[] = $name;
             $aValues[] = ':'.$name;
         }
+
         $sLabels = implode(',',$aLabels);
         $sValues = implode(',',$aValues);
+
         $query = self::$db->prepare("INSERT INTO  {$table} ({$sLabels}) VALUES ($sValues) ");
         $query->execute($this->attributes);
 
@@ -98,15 +140,16 @@ abstract class Object{
     protected function update(){
         $table = static::TableName();
         $aUpdates = [];
+
         foreach ( $this->attributes as $name => $value){
             if ($name == 'id') continue;
             $aUpdates[] = $name.'=:'.$name;
         }
+
         $sUpdates = implode(', ',$aUpdates);
+
         $query = self::$db->prepare("UPDATE  {$table} SET {$sUpdates} WHERE id=:id");
         $query->execute($this->attributes);
-
-
     }
 
     public function save(){
@@ -123,8 +166,7 @@ abstract class Object{
 
         if ($methodPrefix == 'set')
         {
-        	$value = $params[0];
-            $this->attributes[$name] = $value;
+            $this->attributes[$name] = $params[0];
 
             return $this;
 
@@ -133,189 +175,239 @@ abstract class Object{
         {	
             return isset($this->attributes[$name])? $this->attributes[$name] : null;
         }
+        return null;
        
     }
 
 }
+    /**   
+     * @var int $idBrend 
+     * @var int $idBodyAuto  
+     * @var int $idTransmission 
+     * @var string $nameModel  
+     */ 
 
 	class ModelAuto extends Object {
-		/*protected $idModel;
-		protected $idBrend;
-		protected $idBodyAuto;
-		protected $idTransmission;
-		protected $nameModel;*/
-
 
     }
 
+    /**   
+     * @var int $idPrice 
+     * @var int $priceDeposit  
+     */ 
+
 	class Deposit extends Object {
 
-		/*protected $idDeposit;
-		protected $idPrise;
-		protected $priseDeposit;*/
 	}
 
-	class PriseModel extends Object {
-
-		/*protected $idPrise;
-		protected $idModel;
-		protected $prise;*/
-	}
-
+	 /**   
+     * @var string $nameBrend 
+     */ 
 
 	class BrendAuto extends Object {
 
-		/*protected $idBrend;
-		protected $nameBrend;*/
 	}
+
+	 /**   
+     * @var string $type 
+     */ 
 
 	class Transmission extends Object {
 
-		/*protected $idTransmission;
-		protected $type;*/
 	}
+
+	/**   
+     * @var string $typeBodyAuto 
+     */ 
 
 	class BodyAuto extends Object {
 
-		/*protected $idBodyAuto;
-		protected $typeBodyAuto;*/
-
 	}
+
+	/**   
+     * @var int $idModel 
+     * @var string $nameOptions 
+     * @var int $price 
+     * @var string $description 
+     */ 
 
 	class AdditionalOption extends Object {
 
-		/*protected $idOption;
-		protected $idModel;
-		protected $nameOptions;
-		protected $price;
-		protected $description;*/
 	}
+
+	/**   
+     * @var int $percent 
+     * @var int $idModel 
+     * @var string $description 
+     */ 
 
 	class Discount extends Object {
 
-		/*protected $idDiscount;
-		protected $persent;
-		protected $idModel;
-		protected $description;*/
-
 	}
+
+	/**   
+     * @var int $idModel 
+     * @var int $stateNumber 
+     * @var string $status 
+     * @var string $description 
+     */ 
 
 	class Auto extends Object {
 
-		/*protected $idAuto;
-		protected $idModel;
-		protected $stateNumber;
-		protected $status;
-		protected $description;*/
-
-		private function Status() {
+		public function StatusAdd($rentalDate, $returnDate) {
 			//вычисляем занята или свободна машинка в зависимости от даты 
 			//возврата авто из договора, а также даты окончания страховки и даты окончания ТО
+
+            $oInsuranceAuto = InsuranceAuto::findLineByCategory('idAuto', $this->getId());
+            $aReturnDateByRContract = RentalContract::getListByCategory('returnDate','idAuto', $this->id);
+
+            $status = ($returnDate < $oInsuranceAuto->getDateInsEnd() 
+                        && $returnDate < $oInsuranceAuto->getDateToEnd() 
+                        && $returnDate > max($aReturnDateByRContract))? 'арендована' : 'свободна';
+            
+            return static::setStatus($status);
+
 		}
 	}
 
+	/**   
+     * @var int $idAuto 
+     * @var string $imgAuto 
+     */ 
+
 	class ImageAuto extends Object {
 
-		/*protected $idImageAuto;
-		protected $idAuto;
-		protected $imgAuto;*/
 	}
+
+	/**   
+     * @var int $numberInsPolicy 
+     * @var string $dateInsEnd 
+     * @var string $dateToEnd 
+     * @var int $idAuto 
+     * @var string $dateInsEnd 
+     */ 
 
 	class InsuranceAuto extends Object {
 
-		/*protected $idInsuranceAuto;
-		protected $numberInsPolicy;
-		protected $dateInsEnd;
-		protected $dateToEnd;
-		protected $idAuto;*/
 	}
+
+	/**   
+     * @var int $idClient 
+     * @var string $conclusionDate 
+     * @var string $receiptAutoDate 
+     * @var string $receiptAutoTime 
+     * @var string $placeReceipt 
+     * @var string $returnDate 
+     * @var string $returnTime 
+     * @var string $placeReturn 
+     * @var int $summ 
+     */ 
 
 	class RentalContract extends Object {
 
-		/*protected $idClient;
-		protected $idAuto;
-		protected $conclusionDate;
-		protected $receiptAutoDate;
-		protected $receiptAutoTime;
-		protected $placeReceipt;
-		protected $returnDate;
-		protected $returnTime;
-		protected $placeReturn;
-		protected $summ = 0;*/
+		public $idAuto;
+		public $receiptAutoDate;
+		public $returnDate;
+		public $summ;
 
 
-		private function SummAdd() {
+		public function SummAdd() {
 			//вычисление итоговой суммы исходя из стоимости авто, залога, 
 			//а также выбранных дополнительных опций, скидки
+			//Переписать исходя из новых классов
+
+            $oModelAuto = ModelAuto::findById(Auto::getListByCategory('idModel', 'id', $this->idAuto));
+            $oDiscount = Discount::findLineByCategory('idModel', $oModelAuto->getId());
+            $aIdOption = SelectedOption::getListByCategory('idOption','idRcontract',$this->id);
+
+            for ($i = 0; $i < count($aIdOption); $i++){
+                $summ += AdditionalOption::findLineByCategory('id', $aIdOption[$i])->getPrice();
+            }
+
+			$count = (strtotime($this->returnDate) - strtotime($this->receiptAutoDate))/86400;
+
+			$summ += $count * $oModelAuto->getPrice();
+            $summ *= (100 - $oDiscount->getPercent())/100;
+            $summ += Deposit::getListByCategory('priceDeposit','idModel', $oModelAuto->getId());
+
+            return static::setSumm($summ);
 			
 		}
 	}
 
+	/**   
+     * @var string $name 
+     * @var string $surname 
+     * @var string $patronymic 
+     * @var int $numberDriverLicense 
+     * @var string $dateDriverLicense 
+     * @var int $phoneNumber 
+     * @var int $passportID 
+     * @var int $passportSeries 
+     * @var string $passportIssuedBy 
+     * @var string $dob 
+     * @var string $regAddress 
+     */ 
+
 	class Client extends Object {
 
-		/*protected $idClient;
-		protected $name;
-		protected $surname;
-		protected $patronymic;
-		protected $numberDriverLicense;
-		protected $dateDriverLicense;
-		protected $phoneNumber;
-		protected $passportID;
-		protected $passportSeries;
-		protected $passportIssuedBy;
-		protected $dob;
-		protected $regAddress;*/
 	}
 
-	class SelectOption extends Object {
+	/**    
+     * @var int $idRcontract 
+     * @var int $idOption 
+     */ 
 
-		/*protected $idSelectOption;
-		protected $idRcontract;
-		protected $idOption;*/
+	class SelectedOption extends Object {
 
 	}
+
+	/**    
+     * @var int $idRcontract 
+     * @var string $dateAct 
+     * @var int $sumFinesGibdd
+     * @var int $sumFines
+     */ 
 
 	class ActPP extends Object {
 
-		//protected $idRcontract;
-		//protected $dateAct=0;
-		//protected $idFineTime;
-		//protected $sumFinesGibdd;
-		//protected $sumFines=0;
-
-		private $sum;
+		public $idRcontract;
+		public $dateAct;
+		public $sumFinesGibdd;
 
 		public function sumFinesAdd() {
 			//сумма складывается из штрафов за гибдд и из штрафа за нарушение срока
 			//который свою очередь вычисляется след образом: высчитывается продолжительность задержки авто
-			//(дата возврата авто по договору - дата акта возврата авто) из таблицы штрафа за нарушение сроков выбирается штра
-			
+			//(дата возврата авто по договору - дата акта возврата авто) и умножается на стоимость авто в день
+			$oRentalContract = RentalContract::findById($this->idRcontract);
+			$oModelAuto = ModelAuto::findById((Auto::findById($oRentalContract->idAuto))->getIdModel());
+
+			$count = (strtotime($this->dateAct) - strtotime($oRentalContract->receiptAutoDate))/86400;
+			$sumFines = $count > 0 ? $count * ($oModelAuto->getPrice()) : 0;
+			$sumFines+=$this->sumFinesGibdd;
+
+            return static::setSumFines($sumFines);
 		}
 	}
 
-	class FineTime extends Object {
-
-		/*
-		protected $summ;*/
-
-	}
-
+	/**    
+     * @var string $pageTitle 
+     * @var string $text 
+     */ 
 	
 	class Pages extends Object {
 
-		//protected $pageTitle;
-		//protected $text;
 	}
 
+	/**    
+     * @var string $userName 
+     * @var string $titleReviews
+     * @var string $text 
+     * @var string $date
+     * @var string $time 
+     * @var string $email
+     */ 
 	
 	class Reviews extends Object {
-		
-		/*protected $userName;
-		protected $titleReviews;
-		protected $text;
-		protected $date;
-		protected $time;
-		protected $email;*/
-
     	
 	}
