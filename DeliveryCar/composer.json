@@ -1,0 +1,16 @@
+{
+	"name": "acer/delivery-car",
+    "require": {},
+    "autoload": {
+        "classmap": [
+            "application/controllers/",
+            "application/core/",
+            "application/models/",
+            "application/views/"
+        ],
+        "psr-4": {
+            "Services\\": "services",
+            "App\\": "app"
+        }
+    }
+}

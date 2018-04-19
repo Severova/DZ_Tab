@@ -300,7 +300,7 @@ abstract class Object{
      * @var string $returnDate 
      * @var string $returnTime 
      * @var string $placeReturn 
-     * @var int $summ 
+     * @var int $summ
      */ 
 
 	class RentalContract extends Object {
@@ -311,7 +311,7 @@ abstract class Object{
 		public $summ;
 
 
-		public function SummAdd() {
+		public function SummAdd($summ) {
 			//вычисление итоговой суммы исходя из стоимости авто, залога, 
 			//а также выбранных дополнительных опций, скидки
 			//Переписать исходя из новых классов

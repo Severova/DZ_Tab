@@ -1,0 +1,560 @@
+@font-face {
+    font-family: 'Open Sans';
+    src: local("Open Sans Light"), local("OpenSans-Light"), url("../fonts/OpenSans/opensanslight.woff2") format("woff2"), url("../fonts/OpenSans/opensanslight.woff") format("woff"), url("../fonts/OpenSans/opensanslight.ttf") format("truetype");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: local("Open Sans Light Italic"), local("OpenSansLight-Italic"), url("../fonts/OpenSans/opensanslightitalic.woff2") format("woff2"), url("../fonts/OpenSans/opensanslightitalic.woff") format("woff"), url("../fonts/OpenSans/opensanslightitalic.ttf") format("truetype");
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: local("Open Sans"), local("OpenSans"), url("../fonts/OpenSans/opensans.woff2") format("woff2"), url("../fonts/OpenSans/opensans.woff") format("woff"), url("../fonts/OpenSans/opensans.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: local("Open Sans Italic"), local("OpenSans-Italic"), url("../fonts/OpenSans/opensansitalic.woff2") format("woff2"), url("../fonts/OpenSans/opensansitalic.woff") format("woff"), url("../fonts/OpenSans/opensansitalic.ttf") format("truetype");
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: local("Open Sans Semibold"), local("OpenSans-Semibold"), url("../fonts/OpenSans/opensanssemibold.woff2") format("woff2"), url("../fonts/OpenSans/opensanssemibold.woff") format("woff"), url("../fonts/OpenSans/opensanssemibold.ttf") format("truetype");
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: local("Open Sans Semibold Italic"), local("OpenSans-SemiboldItalic"), url("../fonts/OpenSans/opensanssemibolditalic.woff2") format("woff2"), url("../fonts/OpenSans/opensanssemibolditalic.woff") format("woff"), url("../fonts/OpenSans/opensanssemibolditalic.ttf") format("truetype");
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: local("Open Sans Bold"), local("OpenSans-Bold"), url("../fonts/OpenSans/opensansbold.woff2") format("woff2"), url("../fonts/OpenSans/opensansbold.woff") format("woff"), url("../fonts/OpenSans/opensansbold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: local("Open Sans Bold Italic"), local("OpenSans-BoldItalic"), url("../fonts/OpenSans/opensansbolditalic.woff2") format("woff2"), url("../fonts/OpenSans/opensansbolditalic.woff") format("woff"), url("../fonts/OpenSans/opensansbolditalic.ttf") format("truetype");
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: local("Open Sans Extrabold"), local("OpenSans-Extrabold"), url("../fonts/OpenSans/opensansextrabold.woff2") format("woff2"), url("../fonts/OpenSans/opensansextrabold.woff") format("woff"), url("../fonts/OpenSans/opensansextrabold.ttf") format("truetype");
+    font-weight: 800;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: local("Open Sans Extrabold Italic"), local("OpenSans-ExtraboldItalic"), url("../fonts/OpenSans/opensansextrabolditalic.woff2") format("woff2"), url("../fonts/OpenSans/opensansextrabolditalic.woff") format("woff"), url("../fonts/OpenSans/opensansextrabolditalic.ttf") format("truetype");
+    font-weight: 800;
+    font-style: italic;
+}
+
+* {
+    /*все бордер и отступы внутренние*/
+    box-sizing: border-box;
+    /*внешний*/
+    margin: 0;
+    /*внутренний*/
+    padding: 0;
+    /*без обводки*/
+    outline: none !important;
+}
+
+input {
+    outline: none !important;
+}
+
+/*при нажатии*/
+input:focus {
+    outline: none;
+}
+
+a {
+    outline: none;
+    /*подчеркивание*/
+    text-decoration: underline;
+    color: #fed329;
+}
+
+a:hover {
+    color: #dab627;
+}
+
+a:active, a:focus {
+    text-decoration: none;
+    color: #fed329;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    background: #fff;
+    font-size: 16px;
+    min-width: 320px;
+    position: relative;
+    /*межстрочный интервал*/
+    line-height: 1.75;
+    font-family: 'Open Sans';
+    font-weight: normal;
+    font-style: normal;
+    color: #1a1a1a;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+}
+
+.main-head {
+    background: #1a1a1a url(../img/head_bg.png) no-repeat center;
+    background-size: auto;
+    padding-top: 70px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.main-head .main-head__line {
+    padding: 15px 0px;
+    border-bottom: 1px solid rgba(231, 180, 4, 0.05);
+    height: 70px;
+    overflow: hidden;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+}
+
+.main-head.home-page {
+    height: auto;
+    /*вся высота экрана*/
+    min-height: 100vh;
+    background-size: cover;
+    padding-top: 100px;
+}
+
+.menu {
+    list-style: none;
+    margin: 5px 0px 0px 0px;
+}
+
+.menu .menu__item {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.menu .menu__item:last-child {
+    margin-right: 0px;
+}
+
+.menu .menu__link {
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.menu .menu__link:hover {
+    color: #e7b404;
+}
+
+.head-contact {
+    text-align: right;
+    line-height: 1.2;
+}
+
+.head-contact .popup-link {
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.head-phone {
+    font-size: 16px;
+    color: #fff;
+    /*жирность шрифта*/
+    font-weight: 300;
+    text-decoration: none;
+}
+
+.head-phone:hover {
+    text-decoration: none;
+}
+
+.head-stock {
+    height: 395px;
+    width: 100%;
+}
+
+.head-stock .head-stock__item {
+    display: -ms-flexbox;
+    display: flex;
+}
+
+.head-stock .head-stock__img {
+    width: 620px;
+    margin-right: 30px;
+}
+
+.head-stock .head-stock__img img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+}
+
+.head-stock .head-stock__title {
+    color: #fff;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 35px;
+}
+
+.head-stock .head-stock__price {
+    color: #fed329;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.head-stock .head-stock__price span {
+    color: #fff;
+    text-decoration: line-through;
+    font-size: 16px;
+}
+
+.head-stock .head-stock__price strong {
+    font-size: 27px;
+    font-weight: 300;
+}
+
+.head-stock .btn {
+    max-width: 180px;
+}
+
+.head-stock .btn:hover {
+    background: #fff;
+    color: #1a1a1a;
+}
+
+.head-stock__slider {
+    position: relative;
+}
+
+.head-stock__slider .owl-dots {
+    display: block;
+    text-align: center;
+}
+
+.head-stock__slider .owl-dots .owl-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border: 1px solid #e7b404;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.head-stock__slider .owl-dots .owl-dot.active {
+    background: #e7b404;
+}
+
+.head-stock__slider .owl-dots .owl-dot:last-child {
+    margin-right: 0px;
+}
+
+.main-footer {
+    background: #1a1a1a;
+    padding-top: 35px;
+}
+
+.footer-line {
+    margin-bottom: 20px;
+}
+.footer-line .menu {
+    text-align: right;
+}
+
+
+.footer-contact {
+    color: #fff;
+    font-weight: 300;
+    font-size: 14px;
+    margin-bottom: 30px;
+}
+
+.footer-phone {
+    color: #fff;
+    text-decoration: none;
+}
+
+.footer-bottom {
+    padding: 10px 0px;
+    border-top: 1px solid rgba(231, 180, 4, 0.05);
+    color: #fff;
+    font-weight: 300;
+    font-size: 12px;
+}
+
+.advantages {
+    padding: 35px 0px 60px 0px;
+}
+
+.advantages .advantages__title {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 35px;
+}
+
+.advantages .advantages__title h2 {
+    font-size: 24px;
+    font-weight: 800;
+    margin: 0px;
+}
+
+.advantages .advantages__item {
+    text-align: center;
+}
+
+.advantages .advantages__item-icon {
+    margin-bottom: 15px;
+}
+
+.advantages .advantages__item-icon img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+}
+
+.advantages .advantages__item-title {
+    font-size: 22px;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+.quick-reservation {
+    background: #fefaed;
+    overflow: hidden;
+}
+
+.quick-reservation .quick-reservation__left {
+    background: #fed329;
+    position: relative;
+    padding: 20px 10px;
+    min-height: 630px;
+    height: 100vh;
+    position: relative;
+}
+
+/*все закрасить желтым*/
+.quick-reservation .quick-reservation__left:before {
+    width: 2000px;
+    height: 100%;
+    content: "";
+    position: absolute;
+    left: -2000px;
+    top: 0;
+    background: #fed329;
+}
+
+.quick-reservation .quick-reservation__title {
+    padding-left: 55px;
+    font-size: 16px;
+    color: #111111;
+    font-weight: 300;
+    background: url(../img/logo_black.png) no-repeat left center;
+    max-width: 190px;
+    line-height: 1.2;
+    min-height: 40px;
+    margin-bottom: 40px;
+}
+
+.quick-reservation .quick-reservation__title h2 {
+    font-size: 16px;
+    margin: 0px;
+    font-weight: 300;
+}
+
+.form-input {
+    margin-bottom: 10px;
+    display: inline-block;
+    width: 100%;
+    background: #fff;
+    color: #1a1a1a;
+    font-size: 14px;
+    font-family: 'Open Sans';
+    height: 40px;
+    border: 0px;
+    padding: 0px 10px;
+}
+
+.form-input.placeholder {
+    color: #a2a2a2;
+}
+
+.form-input:-moz-placeholder {
+    color: #a2a2a2;
+}
+
+.form-input::-moz-placeholder {
+    color: #a2a2a2;
+}
+
+.form-input:-ms-input-placeholder {
+    color: #a2a2a2;
+}
+
+.form-input::-webkit-input-placeholder {
+    color: #a2a2a2;
+}
+
+.quick-reservation__right {
+    padding: 20px 0px;
+    min-height: 630px;
+    height: 100vh;
+}
+
+.home-car-list {
+    min-height: 590px;
+    height: calc(100vh - 40px);
+    overflow-y: auto;
+}
+
+.car-item {
+    background: #fff;
+    border: 1px solid #aeaba3;
+    padding: 10px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    /*заполенение всего свободного пространства*/
+    justify-content: space-between;
+    height: 190px;
+    margin-bottom: 10px;
+}
+
+.car-item.car-stock {
+    background: #fff url(../img/stock.png) no-repeat top right;
+    background-size: auto;
+}
+
+.car-item .car-item__img {
+    width: 280px;
+    text-align: center;
+}
+
+.car-item .car-item__img img {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: 100%;
+    display: block;
+}
+
+.car-item .car-item__content {
+    width: calc(100% - 300px);
+}
+
+.car-item .car-item__title {
+    font-size: 24px;
+    line-height: 1.2;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    padding-right: 140px;
+}
+
+.car-item .car-item__title a {
+    color: #1a1a1a;
+    text-decoration: none;
+}
+
+.car-item .car-item__title h3 {
+    font-weight: 400;
+    font-size: 24px;
+    margin: 0px;
+}
+
+.car-item .car-item__options {
+    margin-bottom: 30px;
+    padding-right: 140px;
+}
+
+.car-item .car-item__options ul {
+    list-style: none;
+    font-size: 15px;
+    color: #1a1a1a;
+    line-height: 1.4;
+}
+
+.car-item .car-item__options ul span {
+    font-size: 14px;
+    color: #817e75;
+}
+
+.car-item .car-item__bottom {
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+
+.car-item .car-item__price {
+    color: #fed329;
+    font-size: 18px;
+}
+
+.car-item .car-item__price span {
+    color: #1a1a1a;
+    /*зачеркнутый*/
+    text-decoration: line-through;
+    font-size: 16px;
+}
+
+.car-item .car-item__price strong {
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.btn {
+    background: #fed329;
+    display: inline-block;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    min-width: 180px;
+    height: 40px;
+    line-height: 40px;
+    /*без переносов*/
+    white-space: nowrap;
+    padding: 0px 10px;
+    text-align: center;
+    color: #111111;
+    font-size: 20px;
+    font-weight: 400;
+    text-decoration: none;
+    /*плавность*/
+    transition: all .5s;
+}
+
+.btn:hover {
+    background: #1a1a1a;
+    color: #fed329;
+    text-decoration: none;
+}
