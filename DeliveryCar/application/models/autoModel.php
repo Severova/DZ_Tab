@@ -21,6 +21,8 @@ use application\core\Model;
 
 class Auto extends Model {
 
+
+
     public function getImgOther(){
         return ImageAuto::getListByCategory('otherImgAuto', 'idAuto', $this->getId()) ?: null;
     }

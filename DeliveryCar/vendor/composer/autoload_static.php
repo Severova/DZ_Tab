@@ -31,6 +31,7 @@ class ComposerStaticInitb1e714da4541fe90d886b416aac22eb4
     public static $classMap = array (
         'application\\controllers\\Controller_Autopark' => __DIR__ . '/../..' . '/application/controllers/controller_autopark.php',
         'application\\controllers\\Controller_Main' => __DIR__ . '/../..' . '/application/controllers/controller_main.php',
+        'application\\controllers\\Controller_Order' => __DIR__ . '/../..' . '/application/controllers/controller_order.php',
         'application\\core\\AutoInfo' => __DIR__ . '/../..' . '/application/core/AutoInfo.php',
         'application\\core\\AutoItemMini' => __DIR__ . '/../..' . '/application/core/AutoItemMini.php',
         'application\\core\\AutoPark' => __DIR__ . '/../..' . '/application/core/AutoPark.php',
@@ -43,6 +44,7 @@ class ComposerStaticInitb1e714da4541fe90d886b416aac22eb4
         'application\\core\\Menu' => __DIR__ . '/../..' . '/application/core/Menu.php',
         'application\\core\\MenuItem' => __DIR__ . '/../..' . '/application/core/MenuItem.php',
         'application\\core\\Model' => __DIR__ . '/../..' . '/application/core/model.php',
+        'application\\core\\Order' => __DIR__ . '/../..' . '/application/core/Order.php',
         'application\\core\\Route' => __DIR__ . '/../..' . '/application/core/route.php',
         'application\\core\\Slider' => __DIR__ . '/../..' . '/application/core/Slider.php',
         'application\\core\\SliderItem' => __DIR__ . '/../..' . '/application/core/SliderItem.php',

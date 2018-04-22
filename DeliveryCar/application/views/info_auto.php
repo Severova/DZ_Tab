@@ -56,7 +56,7 @@
                                         <input type="date" class="form-input" data-lang="ru" data-large-mode="true" data-translate-mode="false" data-auto-lang="true" data-default-date="<?=date ('M-j-Y')?>" data-id="datedropper-0" data-theme="calendar" readonly="">
                                     </div>
                                 </div>
-                                <input type="submit" class="btn" value="Забронировать">
+                                <a href="/order/add/<?= str_replace(' ','_',$name) ?>" " class="btn">Забронировать</a>
 
                                 <div class="page-auto__mes">
                                     <? if($status == 'арендована'){ ?> <p>Данное авто забронировано до 20.06.2018</p> <? } ?>

@@ -14,10 +14,10 @@
         </div>
         <div class="car-item__bottom">
             <div class="car-item__price">
-                <strong><? echo (($price*(100-$percent))/100) ?></strong> <span><?if ($percent) echo $price ?></span> руб./сутки
+                <strong><?= ($percent)? (($price*(100-$percent))/100): $price ?></strong> <span><?if ($percent) echo $price ?></span> руб./сутки
             </div>
             <div class="car-item__link">
-                <a href="#" class="btn">Забронировать</a>
+                <a href="/order/add/<?= str_replace(' ','_',$name) ?>" " class="btn">Забронировать</a>
             </div>
         </div>
     </div>
