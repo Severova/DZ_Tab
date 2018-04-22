@@ -5,7 +5,13 @@ namespace application\core;
 /**
  * Class MenuItem
  * @package application\core
- * @property string $href
+ * @property string $name
+ * @property string $brand
+ * @property string $percent
+ * @property string $price
+ * @property string $transmission
+ * @property string $drivingExperience
+ * @property string $img
  */
 class SliderItem extends Slider
 {
@@ -13,11 +19,55 @@ class SliderItem extends Slider
     {
         parent::Initialize();
         $this->aParams['name'] = '';
-        $this->aParams['brend'] = '';
+        $this->aParams['brand'] = '';
         $this->aParams['percent'] = '';
         $this->aParams['price'] = '';
+        $this->aParams['transmission'] = '';
+        $this->aParams['drivingExperience'] = '';
         $this->aParams['img'] = '';
     }
+
+    public function setAParams($Params = [])
+    {
+        $this->aParams = $Params;
+        return $this;
+    }
+
+    public function getAParams()
+    {
+        return $this->aParams;
+    }
+
+    public function getDrivingExperience()
+    {
+        return $this->aParams['drivingExperience'];
+    }
+
+    /**
+     * @param string $drivingExperience
+     * @return $this
+     */
+    public function setDrivingExperience($drivingExperience)
+    {
+        $this->aParams['drivingExperience'] = $drivingExperience;
+        return $this;
+    }
+
+    public function getTransmission()
+    {
+        return $this->aParams['transmission'];
+    }
+
+    /**
+     * @param string $transmission
+     * @return $this
+     */
+    public function setTransmission($transmission)
+    {
+        $this->aParams['transmission'] = $transmission;
+        return $this;
+    }
+
 
     public function getPercent()
     {
@@ -49,18 +99,18 @@ class SliderItem extends Slider
         return $this;
     }
 
-    public function getBrend()
+    public function getBrand()
     {
-        return $this->aParams['brend'];
+        return $this->aParams['brand'];
     }
 
     /**
-     * @param string $brend
+     * @param string $brand
      * @return $this
      */
-    public function setBrend($brend)
+    public function setBrand($brand)
     {
-        $this->aParams['brend'] = $brend;
+        $this->aParams['brand'] = $brand;
         return $this;
     }
 

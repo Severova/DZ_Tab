@@ -135,14 +135,14 @@ INSERT INTO `BodyAuto` (`id`, `typeBodyAuto`) VALUES
 
 CREATE TABLE `BrandAuto` (
   `id` int(10) UNSIGNED NOT NULL,
-  `nameBrend` varchar(255) NOT NULL
+  `nameBrand` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Дамп данных таблицы `BrandAuto`
 --
 
-INSERT INTO `BrandAuto` (`id`, `nameBrend`) VALUES
+INSERT INTO `BrandAuto` (`id`, `nameBrand`) VALUES
 (1, 'BMW'),
 (2, 'Audi'),
 (3, 'Ferrari'),
@@ -268,7 +268,7 @@ INSERT INTO `InsuranceAuto` (`id`, `numberInsPolicy`, `dateInsEnd`, `dateToEnd`,
 CREATE TABLE `ModelAuto` (
   `id` int(10) UNSIGNED NOT NULL,
   `idBodyAuto` int(11) UNSIGNED NOT NULL,
-  `idBrend` int(11) UNSIGNED NOT NULL,
+  `idBrand` int(11) UNSIGNED NOT NULL,
   `idTransmission` int(11) UNSIGNED NOT NULL,
   `nameModel` varchar(255) NOT NULL,
   `drivingExperience` int(5) NOT NULL,
@@ -279,7 +279,7 @@ CREATE TABLE `ModelAuto` (
 -- Дамп данных таблицы `ModelAuto`
 --
 
-INSERT INTO `ModelAuto` (`id`, `idBodyAuto`, `idBrend`, `idTransmission`, `nameModel`, `drivingExperience`, `price`) VALUES
+INSERT INTO `ModelAuto` (`id`, `idBodyAuto`, `idBrand`, `idTransmission`, `nameModel`, `drivingExperience`, `price`) VALUES
 (1, 5, 1, 4, 'M4 COMPETITION', 5, 6500),
 (2, 2, 1, 3, 'M4', 5, 7000);
 
@@ -496,8 +496,8 @@ ALTER TABLE `InsuranceAuto`
 --
 ALTER TABLE `ModelAuto`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idBodyAuto` (`idBodyAuto`,`idBrend`,`idTransmission`,`price`),
-  ADD KEY `idBrend` (`idBrend`),
+  ADD KEY `idBodyAuto` (`idBodyAuto`,`idBrand`,`idTransmission`,`price`),
+  ADD KEY `idBrand` (`idBrand`),
   ADD KEY `idTransmission` (`idTransmission`);
 
 --
@@ -675,7 +675,7 @@ ALTER TABLE `InsuranceAuto`
 --
 ALTER TABLE `ModelAuto`
   ADD CONSTRAINT `modelauto_ibfk_1` FOREIGN KEY (`idBodyAuto`) REFERENCES `BodyAuto` (`id`),
-  ADD CONSTRAINT `modelauto_ibfk_2` FOREIGN KEY (`idBrend`) REFERENCES `BrandAuto` (`id`),
+  ADD CONSTRAINT `modelauto_ibfk_2` FOREIGN KEY (`idBrand`) REFERENCES `BrandAuto` (`id`),
   ADD CONSTRAINT `modelauto_ibfk_3` FOREIGN KEY (`idTransmission`) REFERENCES `transmission` (`id`);
 
 --

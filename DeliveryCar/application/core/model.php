@@ -3,12 +3,12 @@
 namespace application\core;
 
 use PDO;
-use application\core\Config;
+
 
 abstract class Model extends Config {
 
     static $db;
-    protected $attributes = [];
+    public $attributes = [];
 
     public function __construct($params = [])
     {
@@ -41,16 +41,12 @@ abstract class Model extends Config {
     public function __get($name)
     {
         $sFuncName = 'get'.ucfirst($name);
-        if (method_exists($this,$sFuncName))
             return $this->$sFuncName();
-
-        return null;
     }
 
     public function __set($name,$value)
     {
         $sFuncName = 'set'.ucfirst($name);
-        if (method_exists($this,$sFuncName))
             $this->$sFuncName($value);
     }
 
@@ -81,7 +77,7 @@ abstract class Model extends Config {
 
     /**
      * @param integer $id
-     * @return static
+     * @return static|null
      */
     public static function findById($id){
 
@@ -94,7 +90,18 @@ abstract class Model extends Config {
         return $aRes? new static($aRes):null;
     }
 
-    public static function findAll(){
+    public static function findList($category){
+
+        $table = static::TableName();
+
+        $oQuery = Model::$db->prepare("SELECT {$category} FROM {$table}");
+        $oQuery->execute();
+        $aRes = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+
+        return $aRes? new static($aRes):null;
+    }
+
+    public static function findAllObj(){
 
         $table = static::TableName();
 
@@ -102,12 +109,12 @@ abstract class Model extends Config {
         $oQuery->execute();
         $aRes = $oQuery->fetchAll(PDO::FETCH_ASSOC);
 
-        return $aRes? $aRes:null;
+        return $aRes? new static($aRes):null;
     }
 
     /**
-     * @param integer $what
-     * @param integer $toWhich
+     * @param string $what
+     * @param string $toWhich
      * @return null|static
      */
 
@@ -115,7 +122,7 @@ abstract class Model extends Config {
 
         $table = static::TableName();
 
-        $oQuery = Object::$db->prepare("SELECT * FROM {$table} WHERE $what=:need_what");
+        $oQuery = Model::$db->prepare("SELECT * FROM {$table} WHERE $what=:need_what");
         $oQuery->execute(['need_what' => $toWhich]);
         $aRes = $oQuery->fetch(PDO::FETCH_ASSOC);
 
@@ -123,9 +130,9 @@ abstract class Model extends Config {
     }
 
     /**
-     * @param integer $category
-     * @param integer $what
-     * @param integer $toWhich
+     * @param string $category
+     * @param string $what
+     * @param string $toWhich
      * @return mixed
      */
     public static function getListByCategory($category, $what, $toWhich){
@@ -140,15 +147,16 @@ abstract class Model extends Config {
     }
 
     /**
-     * @param integer $category
-     * @param integer $what
-     * @param integer $toWhich
+     * @param string $category
+     * @param string $what
+     * @param string $toWhich
      * @return object|null
      */
 
     public static function getListObjectByCategory ($category, $what, $toWhich){
 
         $aRes = static::getListByCategory($category, $what, $toWhich);
+        $results = [];
 
         if (count($aRes) > 1){
             foreach ($aRes as $value) {
@@ -224,235 +232,4 @@ abstract class Model extends Config {
         return null;
 
     }
-}
-/**
- * @var int $idBrend
- * @var int $idBodyAuto
- * @var int $idTransmission
- * @var string $nameModel
- */
-
-class ModelAuto extends Model {
-
-}
-
-/**
- * @var int $idPrice
- * @var int $priceDeposit
- */
-
-class Deposit extends Model {
-
-}
-
-/**
- * @var string $nameBrend
- */
-
-class BrendAuto extends Model {
-
-}
-
-/**
- * @var string $type
- */
-
-class Transmission extends Model {
-
-}
-
-/**
- * @var string $typeBodyAuto
- */
-
-class BodyAuto extends Model {
-
-}
-
-/**
- * @var int $idModel
- * @var string $nameOptions
- * @var int $price
- * @var string $description
- */
-
-class AdditionalOption extends Model {
-
-}
-
-/**
- * @var int $percent
- * @var int $idModel
- * @var string $description
- */
-
-class Discount extends Model {
-
-}
-
-/**
- * @var int $idModel
- * @var int $stateNumber
- * @var string $status
- * @var string $description
- */
-
-class Auto extends Model {
-
-    public function StatusAdd($rentalDate, $returnDate) {
-        //вычисляем занята или свободна машинка в зависимости от даты
-        //возврата авто из договора, а также даты окончания страховки и даты окончания ТО
-
-        $oInsuranceAuto = InsuranceAuto::findLineByCategory('idAuto', $this->getId());
-        $aReturnDateByRContract = RentalContract::getListByCategory('returnDate','idAuto', $this->id);
-
-        $status = ($returnDate < $oInsuranceAuto->getDateInsEnd()
-            && $returnDate < $oInsuranceAuto->getDateToEnd()
-            && $returnDate > max($aReturnDateByRContract))? 'арендована' : 'свободна';
-
-        return static::setStatus($status);
-
-    }
-}
-
-/**
- * @var int $idAuto
- * @var string $imgAuto
- */
-
-class ImageAuto extends Model {
-
-}
-
-/**
- * @var int $numberInsPolicy
- * @var string $dateInsEnd
- * @var string $dateToEnd
- * @var int $idAuto
- * @var string $dateInsEnd
- */
-
-class InsuranceAuto extends Model {
-
-}
-
-/**
- * @var int $idClient
- * @var string $conclusionDate
- * @var string $receiptAutoDate
- * @var string $receiptAutoTime
- * @var string $placeReceipt
- * @var string $returnDate
- * @var string $returnTime
- * @var string $placeReturn
- * @var int $summ
- */
-
-class RentalContract extends Model {
-
-    public $idAuto;
-    public $receiptAutoDate;
-    public $returnDate;
-    public $summ;
-
-
-    public function SummAdd($summ) {
-        //вычисление итоговой суммы исходя из стоимости авто, залога,
-        //а также выбранных дополнительных опций, скидки
-        //Переписать исходя из новых классов
-
-        $oModelAuto = ModelAuto::findById(Auto::getListByCategory('idModel', 'id', $this->idAuto));
-        $oDiscount = Discount::findLineByCategory('idModel', $oModelAuto->getId());
-        $aIdOption = SelectedOption::getListByCategory('idOption','idRcontract',$this->id);
-
-        for ($i = 0; $i < count($aIdOption); $i++){
-            $summ += AdditionalOption::findLineByCategory('id', $aIdOption[$i])->getPrice();
-        }
-
-        $count = (strtotime($this->returnDate) - strtotime($this->receiptAutoDate))/86400;
-
-        $summ += $count * $oModelAuto->getPrice();
-        $summ *= (100 - $oDiscount->getPercent())/100;
-        $summ += Deposit::getListByCategory('priceDeposit','idModel', $oModelAuto->getId());
-
-        return static::setSumm($summ);
-
-    }
-}
-
-/**
- * @var string $name
- * @var string $surname
- * @var string $patronymic
- * @var int $numberDriverLicense
- * @var string $dateDriverLicense
- * @var int $phoneNumber
- * @var int $passportID
- * @var int $passportSeries
- * @var string $passportIssuedBy
- * @var string $dob
- * @var string $regAddress
- */
-
-class Client extends Model {
-
-}
-
-/**
- * @var int $idRcontract
- * @var int $idOption
- */
-
-class SelectedOption extends Model {
-
-}
-
-/**
- * @var int $idRcontract
- * @var string $dateAct
- * @var int $sumFinesGibdd
- * @var int $sumFines
- */
-
-class ActPP extends Model {
-
-    public $idRcontract;
-    public $dateAct;
-    public $sumFinesGibdd;
-
-    public function sumFinesAdd() {
-        //сумма складывается из штрафов за гибдд и из штрафа за нарушение срока
-        //который свою очередь вычисляется след образом: высчитывается продолжительность задержки авто
-        //(дата возврата авто по договору - дата акта возврата авто) и умножается на стоимость авто в день
-        $oRentalContract = RentalContract::findById($this->idRcontract);
-        $oModelAuto = ModelAuto::findById((Auto::findById($oRentalContract->idAuto))->getIdModel());
-
-        $count = (strtotime($this->dateAct) - strtotime($oRentalContract->receiptAutoDate))/86400;
-        $sumFines = $count > 0 ? $count * ($oModelAuto->getPrice()) : 0;
-        $sumFines+=$this->sumFinesGibdd;
-
-        return static::setSumFines($sumFines);
-    }
-}
-
-/**
- * @var string $pageTitle
- * @var string $text
- */
-
-class Pages extends Model {
-
-}
-
-/**
- * @var string $userName
- * @var string $titleReviews
- * @var string $text
- * @var string $date
- * @var string $time
- * @var string $email
- */
-
-class Reviews extends Model {
-
 }

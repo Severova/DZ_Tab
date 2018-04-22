@@ -1,4 +1,10 @@
-
+<?
+/**
+ * @var \application\core\ContentBlock $oMenu
+ * @var \application\core\ContentBlock $oSlider
+ * @var \application\core\ContentBlock $oContent
+ */
+?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -6,24 +12,31 @@
 
     <title> </title>
 
-     <!--Подключение библиотек-->
-    <link rel="stylesheet" href="libs/bootstrap/bootstrap.css">
-    <link rel="stylesheet" href="libs/selectric/selectric.css">
-    <link rel="stylesheet" href="libs/felicegattuso/datedropper.css">
-    <link rel="stylesheet" href="libs/OwlCarousel/owl.carousel.min.css">
+    <!--Для адаптации-->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="css/main.css">
+     <!--Подключение библиотек-->
+    <link rel="stylesheet" href="/libs/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/libs/selectric/selectric.css">
+    <link rel="stylesheet" href="/libs/felicegattuso/datedropper.css">
+    <link rel="stylesheet" href="/libs/felicegattuso/calendar.css">
+    <link rel="stylesheet" href="/libs/OwlCarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="/libs/scrollbar/jquery.scrollbar.css">
+    <link rel="stylesheet" href="/libs/fotorama/fotorama.css" />
+
+    <link rel="stylesheet" href="/css/main.css">
 
 </head>
 <body>
 
-<header class="main-head <? if(true) { ?> home-page <? } ?>"><!--если главная страница-->
+<header class="main-head ">
     <div class="main-head__line">
         <div class="container">
             <div class="row">
                 <div class="col-md-3">
                     <div class="logo">
-                        <a href="/"><img src="img/logo.png" alt="DeliveryCar"></a>
+                        <a href="/"><img src="/img/logo.png" alt="DeliveryCar"></a>
                     </div>
                 </div>
                 <div class="col-md-6">
@@ -38,13 +51,17 @@
             </div>
         </div>
     </div>
-    <?$oSlider->render()?><!--если главная страница-->
+
+    <? $controll = explode('/', $_SERVER['REQUEST_URI'])[1];
+        if($controll=='Main' || $controll=='') $oSlider->render()
+    ?><!--если главная страница-->
+
 </header>
 
 
 <!--сделать отдельный файлик content-->
 
-<?$oFastReservation->render()?>
+<? $oContent->render() ?>
 
 <!---->
     
@@ -76,14 +93,17 @@
         </div>
     </div>
 </footer>
+<div class="hidden"></div>
 
 <!-- Подключение js файлов -->
-<script src="libs/jquery/dist/jquery.js"></script>
+<script src="/libs/jquery/dist/jquery.js"></script>
 
-<script src="libs/selectric/jquery.selectric.js"></script>
-<script src="libs/felicegattuso/datedropper.min.js"></script>
-<script src="libs/OwlCarousel/owl.carousel.min.js"></script>
-<script src="js/main.js"></script>
+<script src="/libs/selectric/jquery.selectric.js"></script>
+<script src="/libs/felicegattuso/datedropper.min.js"></script>
+<script src="/libs/OwlCarousel/owl.carousel.min.js"></script>
+<script src="/libs/scrollbar/jquery.scrollbar.min.js"></script>
+<script src="/libs/fotorama/fotorama.js"></script>
+<script src="/js/main.js"></script>
 
 </body>
 </html>

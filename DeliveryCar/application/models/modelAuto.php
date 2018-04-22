@@ -1,58 +1,35 @@
 <?php
 
 namespace application\model;
+
 use application\core\Model;
 
 
-class ModelAuto extends Model{
-
-
-    public function autoInfo() {
-
-        $aDiscount = Discount::findAll();
-        for($i=0; $i<count($aDiscount); $i++) {
-            $oModel = ModelAuto::findById($aDiscount[$i]['idModel']);
-            $aRezAuto[$i]['name'] = $oModel->getNameModel();
-            $aRezAuto[$i]['brend'] = BrandAuto::findById($oModel->getIdBrend())->getnameBrend();
-            $aRezAuto[$i]['price'] = $oModel->getPrice();
-            $aRezAuto[$i]['percent'] = $aDiscount[$i]['percent'];
-            $aRezAuto[$i]['img'] = (ImageAuto::findById(Auto::findById($oModel->getId())->getId())->getImgAuto());
-        }
-        return $aRezAuto;
-    }
-
-
-}
 /**
- * @var int $percent
- * @var int $idModel
- * @var string $description
+ * @var int $idBrand
+ * @var int $idBodyAuto
+ * @var int $idTransmission
+ * @var string $nameModel
+ * @var string $Brand
+ * @var string $BodyAuto
+ * @var int $Discount
+ * @var int $Deposit
  */
+class ModelAuto extends Model {
 
-class Discount extends Model {
-    static function TableName(){
-
-        return 'Discount';
+    public function getBrand(){
+            return BrandAuto::findById($this->getIdBrand())->getnameBrand() ?: null;
+    }
+    public function getBodyAuto(){
+        return BodyAuto::findById($this->getIdBodyAuto())->getType() ?: null;
+    }
+    public function getTransmission(){
+        return Transmission::findById($this->getIdTransmission())->getType() ?: null;
+    }
+    public function getDiscount(){
+        return Discount::findLineByCategory('idModel', $this->getId())->getPercent() ?: null;
+    }
+    public function getDeposit(){
+        return Deposit::findLineByCategory('idModel', $this->getId())->getDeposit() ?: null;
     }
 }
-
-class ImageAuto extends Model {
-    static function TableName(){
-
-        return 'ImageAuto';
-    }
-}
-class Auto extends Model {
-    static function TableName(){
-
-        return 'Auto';
-    }
-}
-class BrandAuto extends Model {
-    static function TableName(){
-
-        return 'BrandAuto';
-    }
-}
-
-

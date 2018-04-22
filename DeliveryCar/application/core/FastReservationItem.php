@@ -3,17 +3,23 @@
 namespace application\core;
 
 /**
- * Class MenuItem
+ * Class FastReservationItem
  * @package application\core
- * @property string $href
+ * @property string $name
+ * @property string $brand
+ * @property string $percent
+ * @property string $price
+ * @property string $transmission
+ * @property string $drivingExperience
+ * @property string $img
  */
-class FastReservationItem extends Slider
+class FastReservationItem extends FastReservation
 {
     protected function Initialize()
     {
         parent::Initialize();
         $this->aParams['name'] = '';
-        $this->aParams['brend'] = '';
+        $this->aParams['brand'] = '';
         $this->aParams['percent'] = '';
         $this->aParams['price'] = '';
         $this->aParams['transmission'] = '';
@@ -21,6 +27,16 @@ class FastReservationItem extends Slider
         $this->aParams['img'] = '';
     }
 
+    public function setAParams($Params = [])
+    {
+        $this->aParams = $Params;
+        return $this;
+    }
+
+    public function getAParams()
+    {
+        return $this->aParams;
+    }
 
     public function getDrivingExperience()
     {
@@ -82,18 +98,18 @@ class FastReservationItem extends Slider
         return $this;
     }
 
-    public function getBrend()
+    public function getBrand()
     {
-        return $this->aParams['brend'];
+        return $this->aParams['brand'];
     }
 
     /**
-     * @param string $brend
+     * @param string $brand
      * @return $this
      */
-    public function setBrend($brend)
+    public function setBrand($brand)
     {
-        $this->aParams['brend'] = $brend;
+        $this->aParams['brand'] = $brand;
         return $this;
     }
 

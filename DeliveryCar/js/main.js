@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+	//Chrome Smooth Scroll
 	try {
 		$.browserSelector();
 		if($("html").hasClass("chrome")) {
@@ -21,5 +22,19 @@ $(document).ready(function() {
 		nav: false,
 		items: 1
 	});
+
+	$('.fotorama_car').fotorama({
+		width: '100%',
+		maxwidth: '100%',
+		fit: 'cover',
+		transition: 'dissolve',
+		thumbwidth: 110,
+		thumbheight: 75,
+		height: 360,
+		allowfullscreen: true,
+		nav: 'thumbs'
+	});
+
+	jQuery('.scrollbar-inner ').scrollbar();
 	
 });

@@ -40,5 +40,25 @@ abstract class View
         include 'application\\views\\'.$this->template.'.php';
     }
 
+    public function __call($methodName, $params)
+    {
+        $methodPrefix = substr($methodName, 0, 3);
+        $name = lcfirst(substr($methodName, 3));
+
+        if ($methodPrefix == 'set')
+        {
+            $this->aParams[$name] = $params[0];
+
+            return $this;
+
+        }
+        elseif ($methodPrefix == 'get')
+        {
+            return isset($this->aParams[$name])? $this->aParams[$name] : null;
+        }
+        return null;
+
+    }
+
 
 }

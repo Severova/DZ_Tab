@@ -2,9 +2,6 @@
 
 namespace application\core;
 
-
-use application\controllers\Controller_Main;
-
 class Route
 {
 
@@ -19,7 +16,7 @@ class Route
         // получаем имя контроллера
         if ( !empty($routes[1]) )
         {
-            $controller_name = $routes[1];
+            $controller_name = ucfirst($routes[1]);
         }
 
         // получаем имя экшена
@@ -38,7 +35,13 @@ class Route
         if(method_exists($controller, $action))
         {
             // вызываем действие контроллера
-            $controller->$action();
+            if ( !empty($routes[3]) )
+            {
+                $params_name = str_replace('_',' ',$routes[3]);
+                $controller->$action($params_name);
+            }else{
+                $controller->$action();
+            }
         }
         else
         {
@@ -47,7 +50,7 @@ class Route
 
     }
 
-    function ErrorPage404()
+    static function ErrorPage404()
     {
         $host = 'http://'.$_SERVER['HTTP_HOST'].'/';
         header('HTTP/1.1 404 Not Found');
