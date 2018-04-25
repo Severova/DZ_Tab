@@ -30,6 +30,7 @@ class ComposerStaticInitb1e714da4541fe90d886b416aac22eb4
 
     public static $classMap = array (
         'application\\controllers\\Controller_Autopark' => __DIR__ . '/../..' . '/application/controllers/controller_autopark.php',
+        'application\\controllers\\Controller_Fastreservation' => __DIR__ . '/../..' . '/application/controllers/controller_fastreservation.php',
         'application\\controllers\\Controller_Main' => __DIR__ . '/../..' . '/application/controllers/controller_main.php',
         'application\\controllers\\Controller_Order' => __DIR__ . '/../..' . '/application/controllers/controller_order.php',
         'application\\core\\AutoInfo' => __DIR__ . '/../..' . '/application/core/AutoInfo.php',
@@ -37,9 +38,9 @@ class ComposerStaticInitb1e714da4541fe90d886b416aac22eb4
         'application\\core\\AutoPark' => __DIR__ . '/../..' . '/application/core/AutoPark.php',
         'application\\core\\AutoParkModel' => __DIR__ . '/../..' . '/application/core/AutoParkModel.php',
         'application\\core\\BodyHTML' => __DIR__ . '/../..' . '/application/core/BodyHTML.php',
-        'application\\core\\Config' => __DIR__ . '/../..' . '/application/core/config.php',
         'application\\core\\ContentBlock' => __DIR__ . '/../..' . '/application/core/ContentBlock.php',
         'application\\core\\Controller' => __DIR__ . '/../..' . '/application/core/controller.php',
+        'application\\core\\Db' => __DIR__ . '/../..' . '/application/core/DB.php',
         'application\\core\\FastReservation' => __DIR__ . '/../..' . '/application/core/FastReservation.php',
         'application\\core\\Menu' => __DIR__ . '/../..' . '/application/core/Menu.php',
         'application\\core\\MenuItem' => __DIR__ . '/../..' . '/application/core/MenuItem.php',

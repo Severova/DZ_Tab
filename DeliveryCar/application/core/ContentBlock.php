@@ -11,8 +11,9 @@ class ContentBlock extends View
     }
 
     /**
-     * @param BestView $oItem
+     * @param View $oItem
      */
+
     public function addItem($oItem){
         $this->aParams['items'][] = $oItem;
     }

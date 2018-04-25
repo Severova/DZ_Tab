@@ -20,34 +20,35 @@ class Order extends View
         $this->aParams['brand'] = '';
         $this->aParams['percent'] = '';
         $this->aParams['price'] = '';
-        $this->aParams['options'] = '';
+        $this->aParams['options'] = [];
+        $this->aParams['optionsPrice'] = '';
         $this->aParams['img'] = '';
     }
 
-    public function setDiviz($diviz)
+    public function setOptions($options)
     {
-        $this->aParams['diviz'] = $diviz;
+        $this->aParams['options'] = $options;
         return $this;
     }
 
-    public function getDiviz()
+    public function getOptions()
     {
-        return $this->aParams['diviz'];
+        return $this->aParams['options'];
     }
 
     /**
-     * @param string $description
+     * @param string $optionsPrice
      * @return $this
      */
-    public function setDescription($description)
+    public function setOptionsPrice($optionsPrice)
     {
-        $this->aParams['description'] = $description;
+        $this->aParams['optionsPrice'] = $optionsPrice;
         return $this;
     }
 
-    public function getDescription()
+    public function getOptionsPrice()
     {
-        return $this->aParams['description'];
+        return $this->aParams['optionsPrice'];
     }
 
 

@@ -13,11 +13,13 @@ namespace application\core;
  * @property string $drivingExperience
  * @property string $img
  */
+
 class AutoItemMini extends FastReservation
 {
     protected function Initialize()
     {
         parent::Initialize();
+
         $this->aParams['name'] = '';
         $this->aParams['brand'] = '';
         $this->aParams['percent'] = '';
@@ -47,6 +49,7 @@ class AutoItemMini extends FastReservation
      * @param string $drivingExperience
      * @return $this
      */
+
     public function setDrivingExperience($drivingExperience)
     {
         $this->aParams['drivingExperience'] = $drivingExperience;
@@ -62,6 +65,7 @@ class AutoItemMini extends FastReservation
      * @param string $transmission
      * @return $this
      */
+
     public function setTransmission($transmission)
     {
         $this->aParams['transmission'] = $transmission;
@@ -77,6 +81,7 @@ class AutoItemMini extends FastReservation
      * @param string $percent
      * @return $this
      */
+
     public function setPercent($percent)
     {
         $this->aParams['percent'] = $percent;
@@ -92,6 +97,7 @@ class AutoItemMini extends FastReservation
      * @param string $name
      * @return $this
      */
+
     public function setName($name)
     {
         $this->aParams['name'] = $name;
@@ -107,6 +113,7 @@ class AutoItemMini extends FastReservation
      * @param string $brand
      * @return $this
      */
+
     public function setBrand($brand)
     {
         $this->aParams['brand'] = $brand;
@@ -122,6 +129,7 @@ class AutoItemMini extends FastReservation
      * @param string $price
      * @return $this
      */
+
     public function setPrice($price)
     {
         $this->aParams['price'] = $price;
@@ -137,6 +145,7 @@ class AutoItemMini extends FastReservation
      * @param string $img
      * @return $this
      */
+
     public function setImg($img)
     {
         $this->aParams['img'] = $img;

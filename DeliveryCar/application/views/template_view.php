@@ -19,13 +19,13 @@
      <!--Подключение библиотек-->
     <link rel="stylesheet" href="/libs/bootstrap/bootstrap.css">
     <link rel="stylesheet" href="/libs/selectric/selectric.css">
-    <link rel="stylesheet" href="/libs/felicegattuso/datedropper.css">
-    <link rel="stylesheet" href="/libs/felicegattuso/calendar.css">
+    <link rel="stylesheet" href="/libs/flatpickr/flatpickr.min.css">
     <link rel="stylesheet" href="/libs/OwlCarousel/owl.carousel.min.css">
     <link rel="stylesheet" href="/libs/scrollbar/jquery.scrollbar.css">
     <link rel="stylesheet" href="/libs/fotorama/fotorama.css" />
 
     <link rel="stylesheet" href="/css/main.css">
+
 
 </head>
 <body>
@@ -52,8 +52,8 @@
         </div>
     </div>
 
-    <? $controll = explode('/', $_SERVER['REQUEST_URI'])[1];
-        if($controll=='Main' || $controll=='') $oSlider->render()
+    <? $contr = explode('/', $_SERVER['REQUEST_URI'])[1];
+        if($contr=='Main' || $contr=='') $oSlider->render()
     ?><!--если главная страница-->
 
 </header>
@@ -96,14 +96,16 @@
 <div class="hidden"></div>
 
 <!-- Подключение js файлов -->
-<script src="/libs/jquery/dist/jquery.js"></script>
 
+<script src="/libs/jquery/dist/jquery.js"></script>
 <script src="/libs/selectric/jquery.selectric.js"></script>
-<script src="/libs/felicegattuso/datedropper.min.js"></script>
+<script src="/libs/flatpickr/flatpickr.min.js"></script>
+<script src="/libs/flatpickr/l10n/ru.js"></script>
 <script src="/libs/OwlCarousel/owl.carousel.min.js"></script>
 <script src="/libs/scrollbar/jquery.scrollbar.min.js"></script>
 <script src="/libs/fotorama/fotorama.js"></script>
 <script src="/js/main.js"></script>
+<script src="/js/ajax.js"></script>
 
 </body>
 </html>

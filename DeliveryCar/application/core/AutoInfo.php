@@ -30,11 +30,19 @@ class AutoInfo extends View
         $this->aParams['img'] = [];
     }
 
+    /**
+     * @param string $diviz
+     * @return $this
+     */
     public function setDiviz($diviz)
     {
         $this->aParams['diviz'] = $diviz;
         return $this;
     }
+
+    /**
+     * @return string
+     */
 
     public function getDiviz()
     {
@@ -45,18 +53,26 @@ class AutoInfo extends View
      * @param string $description
      * @return $this
      */
+
     public function setDescription($description)
     {
         $this->aParams['description'] = $description;
         return $this;
     }
 
+    /**
+     * @return string
+     */
+
     public function getDescription()
     {
         return $this->aParams['description'];
     }
 
-
+    /**
+     * @param array $Params
+     * @return $this
+     */
 
     public function setAParams($Params = [])
     {
@@ -64,10 +80,18 @@ class AutoInfo extends View
         return $this;
     }
 
+    /**
+     * @return array
+     */
+
     public function getAParams()
     {
         return $this->aParams;
     }
+
+    /**
+     * @return int
+     */
 
     public function getDrivingExperience()
     {
@@ -75,14 +99,19 @@ class AutoInfo extends View
     }
 
     /**
-     * @param string $drivingExperience
+     * @param int $drivingExperience
      * @return $this
      */
+
     public function setDrivingExperience($drivingExperience)
     {
         $this->aParams['drivingExperience'] = $drivingExperience;
         return $this;
     }
+
+    /**
+     * @return string
+     */
 
     public function getTransmission()
     {
@@ -93,11 +122,16 @@ class AutoInfo extends View
      * @param string $transmission
      * @return $this
      */
+
     public function setTransmission($transmission)
     {
         $this->aParams['transmission'] = $transmission;
         return $this;
     }
+
+    /**
+     * @return int
+     */
 
     public function getPercent()
     {
@@ -108,11 +142,16 @@ class AutoInfo extends View
      * @param string $percent
      * @return $this
      */
+
     public function setPercent($percent)
     {
         $this->aParams['percent'] = $percent;
         return $this;
     }
+
+    /**
+     * @return string
+     */
 
     public function getName()
     {
@@ -123,11 +162,16 @@ class AutoInfo extends View
      * @param string $name
      * @return $this
      */
+
     public function setName($name)
     {
         $this->aParams['name'] = $name;
         return $this;
     }
+
+    /**
+     * @return string
+     */
 
     public function getBrand()
     {
@@ -138,11 +182,16 @@ class AutoInfo extends View
      * @param string $brand
      * @return $this
      */
+
     public function setBrand($brand)
     {
         $this->aParams['brand'] = $brand;
         return $this;
     }
+
+    /**
+     * @return int
+     */
 
     public function getPrice()
     {
@@ -153,11 +202,16 @@ class AutoInfo extends View
      * @param string $price
      * @return $this
      */
+
     public function setPrice($price)
     {
         $this->aParams['price'] = $price;
         return $this;
     }
+
+    /**
+     * @return string
+     */
 
     public function getImg()
     {
@@ -168,11 +222,14 @@ class AutoInfo extends View
      * @param string $img
      * @return $this
      */
+
     public function setImg($img)
     {
         $this->aParams['img'] = $img;
         return $this;
     }
+
+
     public function addItems($oItem)
     {
         $this->aParams['items'][] = $oItem;

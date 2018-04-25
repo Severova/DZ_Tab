@@ -9,13 +9,14 @@
         </div>
         <div class="car-item__options">
             <ul>
-                <li><span>Коробка передач:</span> <?= $transmission ?></li>
-                <li><span>Мин. стаж:</span> <?= $drivingExperience ?> лет</li>
+                <?if ($transmission) { ?> <li><span>Коробка передач:</span> <?= $transmission; }?> </li>
+                <?if ($drivingExperience) { ?> <li><span>Мин. стаж:</span> <?= $drivingExperience; }?> лет</li>
+
             </ul>
         </div>
         <div class="car-item__bottom">
             <div class="car-item__price">
-                <strong><?= ($percent)? (($price*(100-$percent))/100): $price ?></strong> <span><?if ($percent) echo $price ?></span> руб./сутки
+                <strong><?= ($percent)? (($price*(100-$percent))/100): $price ?></strong> <span><?if ($price) echo $price ?></span> руб./сутки
             </div>
             <div class="car-item__link">
                 <a href="/autopark/info/<?= str_replace(' ','_',$name) ?>" class="btn">Подробнее</a>

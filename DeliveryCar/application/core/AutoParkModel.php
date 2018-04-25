@@ -13,6 +13,7 @@ class AutoParkModel extends AutoPark
     protected function Initialize()
     {
         parent::Initialize();
+
         $this->aParams['brandAuto'] = '';
         $this->aParams['imgBrand'] = '';
         $this->aParams['items'] = [];
@@ -27,6 +28,7 @@ class AutoParkModel extends AutoPark
      * @param string $brandAuto
      * @return $this
      */
+
     public function setBrandAuto($brandAuto)
     {
         $this->aParams['brandAuto'] = $brandAuto;
@@ -42,6 +44,7 @@ class AutoParkModel extends AutoPark
      * @param string $imgBrand
      * @return $this
      */
+
     public function setImgBrand($imgBrand)
     {
         $this->aParams['imgBrand'] = $imgBrand;

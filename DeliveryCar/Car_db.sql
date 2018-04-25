@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 22 2018 г., 06:36
+-- Время создания: Апр 19 2018 г., 02:58
 -- Версия сервера: 5.6.37
 -- Версия PHP: 7.1.7
 
@@ -87,19 +87,16 @@ CREATE TABLE `auto` (
   `idModel` int(11) UNSIGNED NOT NULL,
   `stateNumber` varchar(20) NOT NULL,
   `status` set('арендована','свободна') NOT NULL,
-  `description` text,
-  `diviz` text
+  `description` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Дамп данных таблицы `auto`
 --
 
-INSERT INTO `auto` (`id`, `idModel`, `stateNumber`, `status`, `description`, `diviz`) VALUES
-(1, 1, 'Е222ХН98', 'свободна', NULL, NULL),
-(2, 2, 'Е222ХН98', 'свободна', NULL, NULL),
-(3, 3, '787654', 'свободна', NULL, NULL),
-(4, 4, '6746736', 'свободна', '- это современный автомобиль в кузове седан. Авто идеально подходит для больших городов, таких как Москва. Среди всех автомобилей бизнес-сегмента А6 считается одним из эталонов. Прокат такого авто позволит наслаждаться каждой поездкой. Салон А6 имеет стильный дизайн и выполнен с учетом максимального комфорта для пассажира. А внешний вид автомобиля заслуживает отдельного внимания. После рестайлинга автомобиль посвежел и приобрел более привлекательный вид. Одним из главных усовершенствований стали светодиодные фары.', 'Успешному человеку нужен соответствующий автомобиль, поэтому прокат Audi A6– это самый лучший выбор из всех возможных.');
+INSERT INTO `auto` (`id`, `idModel`, `stateNumber`, `status`, `description`) VALUES
+(1, 1, 'Е222ХН98', 'свободна', NULL),
+(2, 2, 'Е222ХН98', 'свободна', NULL);
 
 -- --------------------------------------------------------
 
@@ -147,7 +144,7 @@ CREATE TABLE `BrandAuto` (
 
 INSERT INTO `BrandAuto` (`id`, `nameBrand`) VALUES
 (1, 'BMW'),
-(2, 'AUDI'),
+(2, 'Audi'),
 (3, 'Ferrari'),
 (4, 'Jaguar'),
 (5, 'Mercedes'),
@@ -219,7 +216,7 @@ CREATE TABLE `discount` (
 
 INSERT INTO `discount` (`id`, `idModel`, `percent`, `description`) VALUES
 (1, 1, 30, NULL),
-(2, 4, 50, NULL);
+(2, 2, 50, NULL);
 
 -- --------------------------------------------------------
 
@@ -230,37 +227,16 @@ INSERT INTO `discount` (`id`, `idModel`, `percent`, `description`) VALUES
 CREATE TABLE `ImageAuto` (
   `id` int(10) UNSIGNED NOT NULL,
   `idAuto` int(10) UNSIGNED NOT NULL,
-  `imgAuto` varchar(255) NOT NULL,
-  `otherImgAuto` varchar(256) NOT NULL
+  `imgAuto` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Дамп данных таблицы `ImageAuto`
 --
 
-INSERT INTO `ImageAuto` (`id`, `idAuto`, `imgAuto`, `otherImgAuto`) VALUES
-(1, 1, 'slider_img.png', ''),
-(3, 3, 'BMW_218i.jpg', ''),
-(4, 4, 'slider.png', '20.jpg'),
-(5, 4, '', '21.jpg'),
-(6, 4, '', '22.jpg'),
-(7, 4, '', '23.jpg'),
-(8, 4, '', '24.jpg'),
-(10, 3, '', '10.jpg'),
-(11, 3, '', '6.jpg'),
-(12, 3, '', '7.jpg'),
-(13, 3, '', '8.jpg'),
-(14, 3, '', '9.jpg'),
-(15, 2, 'slider.png', '1.jpg'),
-(16, 2, '', '2.jpg'),
-(17, 2, '', '3.jpg'),
-(18, 2, '', '4.jpg'),
-(19, 2, '', '5.jpg'),
-(20, 1, '', '14.jpg'),
-(21, 1, '', '15.jpg'),
-(22, 1, '', '13.jpg'),
-(23, 1, '', '12.jpg'),
-(24, 1, '', '11.jpg');
+INSERT INTO `ImageAuto` (`id`, `idAuto`, `imgAuto`) VALUES
+(1, 1, 'slider_img.png'),
+(2, 1, 'slider_img.png');
 
 -- --------------------------------------------------------
 
@@ -305,9 +281,7 @@ CREATE TABLE `ModelAuto` (
 
 INSERT INTO `ModelAuto` (`id`, `idBodyAuto`, `idBrand`, `idTransmission`, `nameModel`, `drivingExperience`, `price`) VALUES
 (1, 5, 1, 4, 'M4 COMPETITION', 5, 6500),
-(2, 2, 1, 3, '400 i', 5, 7000),
-(3, 3, 1, 2, '218 i Coupe', 5, 9000),
-(4, 2, 2, 2, 'A6', 4, 8000);
+(2, 2, 1, 3, 'M4', 5, 7000);
 
 -- --------------------------------------------------------
 
@@ -404,8 +378,7 @@ INSERT INTO `reviews` (`id`, `userName`, `titleReviews`, `text`, `date`, `time`,
 (12, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
 (13, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
 (14, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
-(15, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
-(16, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com');
+(15, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com');
 
 -- --------------------------------------------------------
 
@@ -454,19 +427,23 @@ ALTER TABLE `AboutCompany`
 -- Индексы таблицы `ActPP`
 --
 ALTER TABLE `ActPP`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_rcontract` (`idRcontract`),
+  ADD KEY `id_fine_time` (`idFineTime`);
 
 --
 -- Индексы таблицы `AdditionalOption`
 --
 ALTER TABLE `AdditionalOption`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_model` (`idModel`);
 
 --
 -- Индексы таблицы `auto`
 --
 ALTER TABLE `auto`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_model` (`idModel`);
 
 --
 -- Индексы таблицы `BodyAuto`
@@ -490,31 +467,38 @@ ALTER TABLE `client`
 -- Индексы таблицы `deposit`
 --
 ALTER TABLE `deposit`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idModel` (`idModel`);
 
 --
 -- Индексы таблицы `discount`
 --
 ALTER TABLE `discount`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_model` (`idModel`);
 
 --
 -- Индексы таблицы `ImageAuto`
 --
 ALTER TABLE `ImageAuto`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_auto` (`idAuto`);
 
 --
 -- Индексы таблицы `InsuranceAuto`
 --
 ALTER TABLE `InsuranceAuto`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_auto` (`idAuto`);
 
 --
 -- Индексы таблицы `ModelAuto`
 --
 ALTER TABLE `ModelAuto`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idBodyAuto` (`idBodyAuto`,`idBrand`,`idTransmission`,`price`),
+  ADD KEY `idBrand` (`idBrand`),
+  ADD KEY `idTransmission` (`idTransmission`);
 
 --
 -- Индексы таблицы `pages`
@@ -526,7 +510,9 @@ ALTER TABLE `pages`
 -- Индексы таблицы `RentalContract`
 --
 ALTER TABLE `RentalContract`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_ client` (`idClient`,`idAuto`),
+  ADD KEY `idAuto` (`idAuto`);
 
 --
 -- Индексы таблицы `reviews`
@@ -538,7 +524,9 @@ ALTER TABLE `reviews`
 -- Индексы таблицы `SelectedOption`
 --
 ALTER TABLE `SelectedOption`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id_rcontract` (`idRcontract`),
+  ADD KEY `id_option` (`idOption`);
 
 --
 -- Индексы таблицы `transmission`
@@ -569,7 +557,7 @@ ALTER TABLE `AdditionalOption`
 -- AUTO_INCREMENT для таблицы `auto`
 --
 ALTER TABLE `auto`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `BodyAuto`
 --
@@ -599,7 +587,7 @@ ALTER TABLE `discount`
 -- AUTO_INCREMENT для таблицы `ImageAuto`
 --
 ALTER TABLE `ImageAuto`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `InsuranceAuto`
 --
@@ -609,7 +597,7 @@ ALTER TABLE `InsuranceAuto`
 -- AUTO_INCREMENT для таблицы `ModelAuto`
 --
 ALTER TABLE `ModelAuto`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT для таблицы `pages`
 --
@@ -624,7 +612,7 @@ ALTER TABLE `RentalContract`
 -- AUTO_INCREMENT для таблицы `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT для таблицы `SelectedOption`
 --
@@ -634,7 +622,76 @@ ALTER TABLE `SelectedOption`
 -- AUTO_INCREMENT для таблицы `transmission`
 --
 ALTER TABLE `transmission`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;COMMIT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- Ограничения внешнего ключа сохраненных таблиц
+--
+
+--
+-- Ограничения внешнего ключа таблицы `ActPP`
+--
+ALTER TABLE `ActPP`
+  ADD CONSTRAINT `actpp_ibfk_1` FOREIGN KEY (`idFineTime`) REFERENCES `FineTime` (`id`),
+  ADD CONSTRAINT `actpp_ibfk_2` FOREIGN KEY (`idRcontract`) REFERENCES `RentalContract` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `AdditionalOption`
+--
+ALTER TABLE `AdditionalOption`
+  ADD CONSTRAINT `additionaloption_ibfk_1` FOREIGN KEY (`idModel`) REFERENCES `ModelAuto` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `auto`
+--
+ALTER TABLE `auto`
+  ADD CONSTRAINT `auto_ibfk_1` FOREIGN KEY (`idModel`) REFERENCES `ModelAuto` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `deposit`
+--
+ALTER TABLE `deposit`
+  ADD CONSTRAINT `deposit_ibfk_1` FOREIGN KEY (`idModel`) REFERENCES `ModelAuto` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `discount`
+--
+ALTER TABLE `discount`
+  ADD CONSTRAINT `discount_ibfk_1` FOREIGN KEY (`idModel`) REFERENCES `ModelAuto` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `ImageAuto`
+--
+ALTER TABLE `ImageAuto`
+  ADD CONSTRAINT `imageauto_ibfk_1` FOREIGN KEY (`idAuto`) REFERENCES `auto` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `InsuranceAuto`
+--
+ALTER TABLE `InsuranceAuto`
+  ADD CONSTRAINT `insuranceauto_ibfk_1` FOREIGN KEY (`idAuto`) REFERENCES `auto` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `ModelAuto`
+--
+ALTER TABLE `ModelAuto`
+  ADD CONSTRAINT `modelauto_ibfk_1` FOREIGN KEY (`idBodyAuto`) REFERENCES `BodyAuto` (`id`),
+  ADD CONSTRAINT `modelauto_ibfk_2` FOREIGN KEY (`idBrand`) REFERENCES `BrandAuto` (`id`),
+  ADD CONSTRAINT `modelauto_ibfk_3` FOREIGN KEY (`idTransmission`) REFERENCES `transmission` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `RentalContract`
+--
+ALTER TABLE `RentalContract`
+  ADD CONSTRAINT `rentalcontract_ibfk_1` FOREIGN KEY (`idClient`) REFERENCES `client` (`id`),
+  ADD CONSTRAINT `rentalcontract_ibfk_2` FOREIGN KEY (`idAuto`) REFERENCES `auto` (`id`);
+
+--
+-- Ограничения внешнего ключа таблицы `SelectedOption`
+--
+ALTER TABLE `SelectedOption`
+  ADD CONSTRAINT `selectedoption_ibfk_1` FOREIGN KEY (`idRcontract`) REFERENCES `RentalContract` (`id`),
+  ADD CONSTRAINT `selectedoption_ibfk_2` FOREIGN KEY (`idOption`) REFERENCES `AdditionalOption` (`id`);
+COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

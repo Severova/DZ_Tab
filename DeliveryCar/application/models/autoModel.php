@@ -17,11 +17,37 @@ use application\core\Model;
  * @var int $drivingExperience
  * @var int $price
  * @var array $imgOther
+ * @var array $option
+ * @var array $optionPrice
  */
 
 class Auto extends Model {
 
+    public function getOption(){
+        $name = $this->getNameOption();
+        $option = [];
+        foreach ($name as $value) {
+            $price = AdditionalOption::findLineByCategory('nameOptions',$value)->getPrice();
+            $option[$price]=$value;
+        }
+        return $option;
+    }
 
+    public function getOptionPrice(){
+        return AdditionalOption::getListByCategory('price', 'idModel', $this->getIdModel()) ?: null;
+    }
+
+
+    public function getNameOption(){
+        $nameOptions = [];
+        $arrayOption = AdditionalOption::findAllObj()->attributes;
+
+        foreach ($arrayOption as $key => $value){
+            $nameOptions[] = $value['nameOptions'];
+        }
+
+        return $nameOptions?: null;
+    }
 
     public function getImgOther(){
         return ImageAuto::getListByCategory('otherImgAuto', 'idAuto', $this->getId()) ?: null;
@@ -49,7 +75,13 @@ class Auto extends Model {
     }
 
     public function getTransmission(){
-        return Transmission::findById((ModelAuto::findById($this->getIdModel())->getIdTransmission()))->getType() ?: null;
+        $idTrans = ModelAuto::findById($this->getIdModel())->getIdTransmission();
+
+        if($idTrans) {
+            return Transmission::findById($idTrans)->getType() ?: null;
+        }
+
+        return null;
     }
 
     public function getPercent(){

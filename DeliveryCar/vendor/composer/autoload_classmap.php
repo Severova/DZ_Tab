@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'application\\controllers\\Controller_Autopark' => $baseDir . '/application/controllers/controller_autopark.php',
+    'application\\controllers\\Controller_Fastreservation' => $baseDir . '/application/controllers/controller_fastreservation.php',
     'application\\controllers\\Controller_Main' => $baseDir . '/application/controllers/controller_main.php',
     'application\\controllers\\Controller_Order' => $baseDir . '/application/controllers/controller_order.php',
     'application\\core\\AutoInfo' => $baseDir . '/application/core/AutoInfo.php',
@@ -14,9 +15,9 @@ return array(
     'application\\core\\AutoPark' => $baseDir . '/application/core/AutoPark.php',
     'application\\core\\AutoParkModel' => $baseDir . '/application/core/AutoParkModel.php',
     'application\\core\\BodyHTML' => $baseDir . '/application/core/BodyHTML.php',
-    'application\\core\\Config' => $baseDir . '/application/core/config.php',
     'application\\core\\ContentBlock' => $baseDir . '/application/core/ContentBlock.php',
     'application\\core\\Controller' => $baseDir . '/application/core/controller.php',
+    'application\\core\\Db' => $baseDir . '/application/core/DB.php',
     'application\\core\\FastReservation' => $baseDir . '/application/core/FastReservation.php',
     'application\\core\\Menu' => $baseDir . '/application/core/Menu.php',
     'application\\core\\MenuItem' => $baseDir . '/application/core/MenuItem.php',

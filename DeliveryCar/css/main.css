@@ -710,7 +710,7 @@ body {
 }
 
 .bread-crumbs .bread-crumbs__item:before {
-    content: "\\";
+    content: "/";
     font-size: 14px;
     position: absolute;
     top: 0;

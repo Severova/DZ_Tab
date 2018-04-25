@@ -32,6 +32,7 @@
                     </div>
                     <div class="page-auto__price">
                         <strong><?= ($percent)? (($price*(100-$percent))/100): $price ?></strong> <span><?if ($percent) echo $price ?></span> руб./сутки
+
                     </div>
                     <div class="page-auto__options">
                         <ul>
@@ -49,11 +50,11 @@
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="" class="form-label">Начало</label>
-                                        <input type="date" class="form-input" data-lang="ru" data-large-mode="true" data-translate-mode="false" data-auto-lang="true" data-default-date="<?=date ('M-j-Y')?>" data-id="datedropper-0" data-theme="calendar" readonly="">
+                                        <input type="date" class="form-input lease_start" placeholder="Начало аренды">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="" class="form-label">Конец</label>
-                                        <input type="date" class="form-input" data-lang="ru" data-large-mode="true" data-translate-mode="false" data-auto-lang="true" data-default-date="<?=date ('M-j-Y')?>" data-id="datedropper-0" data-theme="calendar" readonly="">
+                                        <input type="date" class="form-input lease_ending" placeholder="Окончание аренды">
                                     </div>
                                 </div>
                                 <a href="/order/add/<?= str_replace(' ','_',$name) ?>" " class="btn">Забронировать</a>

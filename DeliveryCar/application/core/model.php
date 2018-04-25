@@ -5,24 +5,16 @@ namespace application\core;
 use PDO;
 
 
-abstract class Model extends Config {
+abstract class Model extends PDO{
 
     static $db;
     public $attributes = [];
 
+
     public function __construct($params = [])
     {
-        $config = Config::$database['default'];
 
-        try{
-            if (is_null(Model::$db)) {
-                Model::$db = new PDO($config['dsn'], $config['login'], $config['password']);
-            }
-        }
-        catch (PDOException $e){
-            echo 'Подключение не удалось: ' . $e->getMessage();
-        }
-
+        static::$db = Db::instance();
 
         foreach ($params as $param_name => $param_value){
 
@@ -38,13 +30,14 @@ abstract class Model extends Config {
         }
     }
 
+
     public function __get($name)
     {
         $sFuncName = 'get'.ucfirst($name);
             return $this->$sFuncName();
     }
 
-    public function __set($name,$value)
+    public function __set($name, $value)
     {
         $sFuncName = 'set'.ucfirst($name);
             $this->$sFuncName($value);
@@ -81,6 +74,8 @@ abstract class Model extends Config {
      */
     public static function findById($id){
 
+        !is_null(static::$db)?: static::$db = Db::instance();
+
         $table = static::TableName();
 
         $oQuery = Model::$db->prepare("SELECT * FROM {$table} WHERE id=:need_id");
@@ -91,6 +86,8 @@ abstract class Model extends Config {
     }
 
     public static function findList($category){
+
+        !is_null(static::$db)?: static::$db = Db::instance();
 
         $table = static::TableName();
 
@@ -103,8 +100,9 @@ abstract class Model extends Config {
 
     public static function findAllObj(){
 
-        $table = static::TableName();
+        !is_null(static::$db)?: static::$db = Db::instance();
 
+        $table = static::TableName();
         $oQuery = Model::$db->prepare("SELECT * FROM {$table}");
         $oQuery->execute();
         $aRes = $oQuery->fetchAll(PDO::FETCH_ASSOC);
@@ -119,6 +117,8 @@ abstract class Model extends Config {
      */
 
     public static function findLineByCategory($what, $toWhich){
+
+        !is_null(static::$db)?: static::$db = Db::instance();
 
         $table = static::TableName();
 
@@ -136,6 +136,8 @@ abstract class Model extends Config {
      * @return mixed
      */
     public static function getListByCategory($category, $what, $toWhich){
+
+        !is_null(static::$db)?: static::$db = Db::instance();
 
         $table = static::TableName();
 

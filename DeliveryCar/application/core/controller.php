@@ -53,6 +53,5 @@ class Controller {
     // действие (action), вызываемое по умолчанию
     function action_index()
     {
-        //todo
     }
 }
