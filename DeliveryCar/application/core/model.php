@@ -24,7 +24,6 @@ abstract class Model extends PDO{
             } else
                 {
                     $sFuncName = 'set'.ucfirst($param_name);
-                    //if (method_exists($this,$sFuncName ))
                     $this->$sFuncName($param_value);
                 }
         }

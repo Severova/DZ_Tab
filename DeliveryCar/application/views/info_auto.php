@@ -3,7 +3,7 @@
         <ul class="bread-crumbs">
             <li class="bread-crumbs__item"><a href="/">Главная</a></li>
             <li class="bread-crumbs__item"><a href="/autopark">Автопарк</a></li>
-            <li class="bread-crumbs__item"><span><?=$brand?> <?= $name ?></span></li>
+            <?if ($brand) { ?> <li class="bread-crumbs__item"><span><?=$brand?> <? if($name) echo $name ?></span></li> <? } ?>
         </ul>
     </div>
 </div>
@@ -16,10 +16,13 @@
                     <div class="fotorama_car">
                         <!---->
 
-                        <? foreach ($img as $value){ ?>
+                        <? if($img) {
 
-                            <img src="<? echo str_replace(' ','',"\\img\\Autopark\\{$brand}\\{$name}\\{$value}")?>" alt="">
-                        <? } ?>
+                            foreach ($img as $value) { ?>
+                                <img src="<? echo str_replace(' ', '', "\\img\\Autopark\\{$brand}\\{$name}\\{$value}") ?>"
+                                     alt="">
+                            <? }
+                        }?>
 
                         <!---->
                     </div>
@@ -28,16 +31,17 @@
             <div class="col-md-6">
                 <div class="page-auto__info">
                     <div class="page-auto__title">
-                        <h1><?=$brand?> <?= $name ?></h1>
+                        <?if ($brand) { ?> <h1><?=$brand?> <? if($name) echo $name ?></h1><? } ?>
                     </div>
                     <div class="page-auto__price">
                         <strong><?= ($percent)? (($price*(100-$percent))/100): $price ?></strong> <span><?if ($percent) echo $price ?></span> руб./сутки
 
                     </div>
+
                     <div class="page-auto__options">
                         <ul>
-                            <li><span>Коробка передач:</span> <?= $transmission ?></li>
-                            <li><span>Мин. стаж:</span> <?= $drivingExperience ?></li>
+                            <?if ($transmission) { ?><li><span>Коробка передач:</span> <?= $transmission ?></li><? } ?>
+                            <?if ($drivingExperience) { ?><li><span>Мин. стаж:</span> <?= $drivingExperience ?></li><? } ?>
                         </ul>
                     </div>
 
@@ -46,7 +50,7 @@
                             Арендовать
                         </div>
                         <div class="page-auto__form-wrap">
-                            <form action="">
+                            <form action="/order/add/<?= str_replace(' ','_',$name) ?>" method="POST">
                                 <div class="row">
                                     <div class="col-md-6">
                                         <label for="" class="form-label">Начало</label>
@@ -57,7 +61,17 @@
                                         <input type="date" class="form-input lease_ending" placeholder="Окончание аренды">
                                     </div>
                                 </div>
-                                <a href="/order/add/<?= str_replace(' ','_',$name) ?>" " class="btn">Забронировать</a>
+                                <div class="total-price-block">
+                                    <p>Итоговая стоимость: </p>
+                                    <div class="js-total_cost">
+                                        <span class="js-total_cost-old" style="display: none;"><?= ($percent)? (($price*(100-$percent))/100): $price ?></span>
+                                        <div class="js-total_cost-new"></div>
+                                    </div>
+                                </div>
+                                <input type="hidden" value="" name="start_date">
+                                <input type="hidden" value="" name="ending_date">
+                                <input type="submit" class="btn" value="Забронировать">
+
 
                                 <div class="page-auto__mes">
                                     <? if($status == 'арендована'){ ?> <p>Данное авто забронировано до 20.06.2018</p> <? } ?>
@@ -73,7 +87,7 @@
         <div class="page-auto__desc">
             <h2>Описание:</h2>
             <p><strong><?=$brand?> <?= $name ?></strong> <?= $description ?></p>
-            <p><i><?=$diviz?></i></p>
+            <? if($diviz){ ?><p><i><?=$diviz?></i></p> <? } ?>
         </div>
     </div>
 </div>

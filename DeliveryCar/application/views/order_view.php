@@ -13,9 +13,9 @@
                     <div class="page-ordering__date">
                         <p>Период бронирования: </p>
                         <label for="" class="form-label">Начало аренды</label>
-                        <input type="date" class="form-input lease_start" placeholder="<?php echo $_POST['start_date']; ?>">
+                        <input type="date" class="form-input lease_start_order" placeholder="<?php echo $_POST['start_date']; ?>">
                         <label for="" class="form-label">Окончание аренды</label>
-                        <input type="date" class="form-input lease_ending" placeholder="<?php echo $_POST['ending_date']; ?>">
+                        <input type="date" class="form-input lease_ending_order" placeholder="<?php echo $_POST['ending_date']; ?>">
                     </div>
                 </div>
             </div>
@@ -28,7 +28,7 @@
 
                         <div class="basic-line">
                             Базовая стоимость аренды в день, включая
-                            <span><?= $total = ($percent)? (($price*(100-$percent))/100): $price ?> руб.</span>
+                            <span><strong><?= $total = ($percent)? (($price*(100-$percent))/100): $price ?></strong> руб.</span>
                         </div>
 
                         <div class="basic-list">
@@ -44,13 +44,16 @@
                             <div class="additional-options__title">
                                 Дополнительные опции
                             </div>
-                            <?$i=0?>
-                            <? foreach ($options as $priceOp => $name) {?>
+                            <? if($options) {
+                                $i=0;
+                                foreach ($options as $priceOp => $name) {?>
                                 <div class="form-chek">
                                     <input type="checkbox" id="<?=$i?>" data-price="<?=$priceOp?>" class="options_checkbox">
-                                    <label for="<?=$i?>"><?=$name?> <?=$priceOp?></label>
+                                    <label for="<?=$i?>"><?=$name?> <span><?=$priceOp?></span></label>
                                 </div>
-                            <?$i++;}?>
+                                <?$i++;
+                                }
+                            }?>
                         </div>
 
                         <div class="user-info">
@@ -79,11 +82,12 @@
 
                     <div class="ordering-bottom">
                         <div class="ordering-itog">
-                            Итого<? $start_dates = explode('-', $_POST['start_date']);
-                                    $start_date = $start_dates[1].'-'.$start_dates[0].'-'.$start_dates[2];
+                            Итого
+                            <? $start_dates = explode('-', $_POST['start_date']);
+                                $start_date = $start_dates[1].'-'.$start_dates[0].'-'.$start_dates[2];
 
-                                    $ending_dates = explode('-', $_POST['ending_date']);
-                                    $ending_date = $ending_dates[1].'-'.$ending_dates[0].'-'.$ending_dates[2];
+                                $ending_dates = explode('-', $_POST['ending_date']);
+                                $ending_date = $ending_dates[1].'-'.$ending_dates[0].'-'.$ending_dates[2];
                             ?>
                             <span><strong class="ordering-itog_st"> <?=$total*(abs(strtotime($start_date)-strtotime($ending_date))/86400)?></strong> руб.</span>
                         </div>
@@ -91,7 +95,7 @@
                             <p>Включая налоги и обязательные сборы</p>
                         </div>
                         <div class="ordering__durability">
-                            <p>Длительность аренды : 7 дн.</p>
+                            <?if (($start_date)&&($ending_date)) { ?><p>Длительность аренды : <?=abs(strtotime($start_date)-strtotime($ending_date))/86400?> дн.</p> <? } ?>
                         </div>
                         <div class="ordering-submit">
                             <input type="submit" class="btn" value="Оформить">

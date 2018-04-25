@@ -357,7 +357,6 @@ body {
 
 .quick-reservation {
     background: #fefaed;
-    overflow: hidden;
 }
 
 .quick-reservation .quick-reservation__left {
@@ -452,7 +451,7 @@ body {
     -ms-flex-pack: justify;
     /*заполенение всего свободного пространства*/
     justify-content: space-between;
-    height: 190px;
+    height: 215px;
     margin-bottom: 10px;
 }
 
@@ -794,8 +793,8 @@ body {
     background: url(../img/order-check.png) no-repeat center;
     content: "";
     position: absolute;
-    left: 20px;
-    top: 20px;
+    left: 0px;
+    top: 0px;
 }
 
 .page-ordering .page-ordering__photo img {
@@ -1078,4 +1077,57 @@ body {
 .page-auto__desc p {
     font-size: 15px;
     margin-bottom: 20px;
+}
+
+.total-price-block {
+    display: -ms-flexbox;
+    display: flex;
+    padding-top: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+.total-price-block .js-total_cost-new {
+    padding-left: 10px;
+    font-weight: 800;
+    font-size: 20px;
+    color: #fed329;
+}
+
+.page-auto__form .total-price-block .js-total_cost-new {
+    color: #fff;
+}
+
+.form-chek label span {
+    font-weight: 700;
+    display: inline-block;
+    padding-left: 5px;
+}
+
+.home-car-list {
+    position: relative;
+}
+
+.mes-no-car {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    -ms-flex-align: center;
+    align-items: center;
+    font-size: 32px;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-align: center;
+    color: #d1cec5;
+}
+
+.mes-no-car p {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translate(0, -50%);
 }

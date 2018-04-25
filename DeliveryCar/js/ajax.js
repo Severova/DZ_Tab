@@ -11,7 +11,6 @@ $(document).ready(function() {
 
             success: function (result) {
                 if (result) {
-                    console.log(result);
                     $('.home-car-list').html(result);
 
                     var start_date = new Date($('input.lease_start').val());
@@ -26,7 +25,9 @@ $(document).ready(function() {
                         var total_cost_old = $(this).children('.js-total_cost-old').html();
                         var total_cost_new = $(this).children('.js-total_cost-new');
 
-                        $(total_cost_new).text(total_cost_old * full_date);
+                        if ($.isNumeric(full_date)){
+                            $(total_cost_new).text(total_cost_old * full_date);
+                        }
                     });
                 }
             }

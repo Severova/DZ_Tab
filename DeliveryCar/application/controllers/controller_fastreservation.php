@@ -24,7 +24,7 @@ class Controller_Fastreservation extends core\Controller{
 
 
         if(is_null($oModel)){
-            echo "К сожалению, на данный момент машин такой модели нет в наличии";
+            echo "<div class=\"mes-no-car\"><p>К сожалению, на данный момент машин такой модели нет в наличии</p></div>";
 
             return true;
         }

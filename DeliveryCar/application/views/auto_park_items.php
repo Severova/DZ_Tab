@@ -5,7 +5,7 @@
     </div>
     <div class="car-item__content">
         <div class="car-item__title">
-            <h3><a href="/autopark/info/<?= str_replace(' ','_',$name) ?>"><?= $brand ?> <?= $name ?></a></h3>
+            <h3><a href="/autopark/info/<?= str_replace(' ','_',$name) ?>"><?= strtoupper($brand) ?> <?= strtoupper($name) ?></a></h3>
         </div>
         <div class="car-item__options">
             <ul>
@@ -16,7 +16,7 @@
         </div>
         <div class="car-item__bottom">
             <div class="car-item__price">
-                <strong><?= ($percent)? (($price*(100-$percent))/100): $price ?></strong> <span><?if ($price) echo $price ?></span> руб./сутки
+                <strong><?= ($percent)? (($price*(100-$percent))/100): $price ?></strong> <span><?if ($percent) echo $price ?></span> руб./сутки
             </div>
             <div class="car-item__link">
                 <a href="/autopark/info/<?= str_replace(' ','_',$name) ?>" class="btn">Подробнее</a>

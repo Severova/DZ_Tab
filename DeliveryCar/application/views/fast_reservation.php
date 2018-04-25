@@ -13,10 +13,11 @@
                         <select name="" id="select">
 
                             <option value="0">Все марки</option>
-
-                            <? foreach ($brand as $number => $nameBrand) {?>
-                                <option value="<?=$number+1?>"><?= $nameBrand ?></option>
-                            <?}?>
+                            <?if ($brand) {
+                                foreach ($brand as $number => $nameBrand) {?>
+                                    <option value="<?=$number+1?>"><?= strtoupper($nameBrand) ?></option>
+                                <?}
+                            }?>
 
                         </select>
                     </div>

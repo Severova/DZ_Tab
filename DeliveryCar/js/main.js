@@ -53,7 +53,64 @@ $(document).ready(function() {
             	});
 
                 $('input[name="ending_date"]').val(ending_date_hidden);
+
+                // $.ajax({
+                //     url: "/addarenda",
+                //     type: "POST",
+                //     data: {ending_date: ending_date},
+                //     dataType: 'html',
+                //
+                //     success: function (result) {
+                //         console.log(result);
+                //         //$('.js-status').html(result);
+                //     }
+                //
+                // });
 			});
+
+        }
+    });
+
+    // Order page
+    flatpickr('input.lease_start_order', {
+        altInput: true,
+        altFormat: "d-m-Y",
+        dateFormat: "m-d-Y",
+        minDate: "today",
+        "locale": "ru"
+    });
+    flatpickr('input.lease_ending_order', {
+        altInput: true,
+        altFormat: "d-m-Y",
+        dateFormat: "m-d-Y",
+        minDate: new Date().fp_incr(1),
+        "locale": "ru",
+
+
+        onChange: function() {
+
+            $(function () {
+                var start_date = new Date($('input.lease_start_order').val());
+                var ending_date = new Date($('input.lease_ending_order').val());
+                var auto_price = $('.basic-line span strong').text();
+
+                var full_date = Math.ceil(Math.abs(start_date.getTime() - ending_date.getTime()) / (1000 * 3600 * 24));
+
+                var itog_auto_price = auto_price * full_date;
+
+                var options_price=0;
+
+                $('.options_checkbox').each(function(){
+
+                    if($(this).prop("checked")) {
+                        options_price = $(this).data('price');
+
+                    }
+                });
+
+                $('.ordering-itog_st').html(parseInt(itog_auto_price) + options_price);
+
+            });
 
         }
     });
@@ -64,7 +121,6 @@ $(document).ready(function() {
         var itog = $('.ordering-itog_st').text();
 
         if($this.prop("checked")) {
-            console.log(price);
             $('.ordering-itog_st').html(parseInt(itog) + price);
         }else {
             $('.ordering-itog_st').html(parseInt(itog) - price);

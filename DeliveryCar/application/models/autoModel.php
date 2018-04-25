@@ -98,18 +98,20 @@ class Auto extends Model {
         return ImageAuto::findLineByCategory('idAuto', $this->getId())->getImgAuto() ?: null;
     }
 
-    public function StatusAdd($rentalDate, $returnDate) {
+    public function StatusAdd($date)
+    {
         //вычисляем занята или свободна машинка в зависимости от даты
         //возврата авто из договора, а также даты окончания страховки и даты окончания ТО
 
         $oInsuranceAuto = InsuranceAuto::findLineByCategory('idAuto', $this->getId());
-        $aReturnDateByRContract = RentalContract::getListByCategory('returnDate','idAuto', $this->id);
-
-        $status = ($returnDate < $oInsuranceAuto->getDateInsEnd()
-            && $returnDate < $oInsuranceAuto->getDateToEnd()
-            && $returnDate > max($aReturnDateByRContract))? 'арендована' : 'свободна';
-
+        $aReturnDateByRContract = RentalContract::getListByCategory('returnDate', 'idAuto', $this->getId());
+        if (is_null($oInsuranceAuto) || is_null($aReturnDateByRContract)) {
+            $status = 'свободна';
+        } else {
+            $status = ($date < $oInsuranceAuto->getDateInsEnd()
+                && $date < $oInsuranceAuto->getDateToEnd()
+                && $date > max($aReturnDateByRContract)) ? 'арендована' : 'свободна';
+        }
         return static::setStatus($status);
-
     }
 }
