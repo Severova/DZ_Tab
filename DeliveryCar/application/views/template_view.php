@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="/libs/OwlCarousel/owl.carousel.min.css">
     <link rel="stylesheet" href="/libs/scrollbar/jquery.scrollbar.css">
     <link rel="stylesheet" href="/libs/fotorama/fotorama.css" />
+    <link rel="stylesheet" href="/libs/fancybox/dist/jquery.fancybox.min.css" />
 
     <link rel="stylesheet" href="/css/main.css">
 
@@ -45,7 +46,7 @@
                 <div class="col-md-3">
                     <div class="head-contact">
                         <a href="tel:+7 (495) 528 40 55" class="head-phone">+7 (495) 528 40 55</a><br>
-                        <a href="#" class="popup-link">Заказать звонок</a>
+                        <a data-src="#order-call" href="javascript:;" class="popup-link">Заказать звонок</a>
                     </div>
                 </div>
             </div>
@@ -93,6 +94,16 @@
         </div>
     </div>
 </footer>
+<div class="popup-form" id="order-call">
+    <div class="popup-form__title">
+        Заказать звонок
+    </div>
+    <div class="popup-form__content">
+        <input type="text" class="form-input" placeholder="Укажите ваше имя*">
+        <input type="tel" class="form-input" placeholder="Укажите номер телефона*">
+        <input type="submit" class="btn">
+    </div>
+</div>
 <div class="hidden"></div>
 
 <!-- Подключение js файлов -->
@@ -104,6 +115,8 @@
 <script src="/libs/OwlCarousel/owl.carousel.min.js"></script>
 <script src="/libs/scrollbar/jquery.scrollbar.min.js"></script>
 <script src="/libs/fotorama/fotorama.js"></script>
+<script src="/libs/fancybox/dist/jquery.fancybox.min.js"></script>
+
 <script src="/js/main.js"></script>
 <script src="/js/ajax.js"></script>
 

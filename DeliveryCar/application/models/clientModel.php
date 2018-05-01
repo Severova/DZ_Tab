@@ -1,11 +1,9 @@
 <?php
-namespace application\model;
+namespace application\models;
 use application\core\Model;
 
 /**
- * @var string $name
- * @var string $surname
- * @var string $patronymic
+ * @var string $fio
  * @var int $numberDriverLicense
  * @var string $dateDriverLicense
  * @var int $phoneNumber
@@ -14,6 +12,7 @@ use application\core\Model;
  * @var string $passportIssuedBy
  * @var string $dob
  * @var string $regAddress
+ * @var string $email
  */
 
 class Client extends Model {

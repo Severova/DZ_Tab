@@ -4,13 +4,13 @@
     </div>
     <div class="car-item__content">
         <div class="car-item__title">
-            <h3><a href="/autopark/info/<?= str_replace(' ','_',$name) ?>"><?= strtoupper($brand) ?> <?= strtoupper($name) ?></a></h3>
+            <h3><a href="/autopark/info/<?= str_replace(' ','_',$name) ?>"><?= strtoupper($brand) ?> <span class="name_model"><?= strtoupper($name) ?></span></a></h3>
         </div>
         <div class="car-item__options">
             <ul>
                 <?if ($transmission) { ?> <li><span>Коробка передач:</span> <?= $transmission ?></li> <? } ?>
                 <?if ($drivingExperience) { ?> <li><span>Мин. стаж:</span> <?= $drivingExperience ?> лет</li> <? } ?>
-                <div class="js-status"></div>
+                <div class="js-status" id="auto_<?= str_replace(' ','_',$name) ?>"></div>
                 <div class="total-price-block">
                     <p>Итоговая стоимость: </p>
                     <div class="js-total_cost">

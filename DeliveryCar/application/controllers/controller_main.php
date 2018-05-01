@@ -2,7 +2,7 @@
 namespace  application\controllers;
 
 use application\core;
-use application\model;
+use application\models;
 
 class Controller_Main extends core\Controller
 {
@@ -19,7 +19,7 @@ class Controller_Main extends core\Controller
         $oFastReservation = new core\FastReservation('fast_reservation');
 
 
-        $oBrand = model\BrandAuto::findAllObj();
+        $oBrand = models\BrandAuto::findAllObj();
 
         foreach ($oBrand as $value) {
             foreach ($value as $vValue) {
@@ -28,11 +28,11 @@ class Controller_Main extends core\Controller
         }
 
 
-        $oAutos = model\Auto::findAllObj();
+        $oAutos = models\Auto::findAllObj();
 
         foreach ($oAutos->attributes as $value) {
 
-            $oAuto = model\Auto::findById($value['id']);
+            $oAuto = models\Auto::findById($value['id']);
 
             $oItemFastReservation = new core\AutoItemMini('fast_reservation_items');
 

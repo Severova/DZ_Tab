@@ -2,7 +2,7 @@
 namespace  application\controllers;
 
 use application\core;
-use application\model;
+use application\models;
 
 class Controller_Autopark extends core\Controller
 {
@@ -15,11 +15,11 @@ class Controller_Autopark extends core\Controller
         $oAutoPark = new core\AutoPark('auto_park');
         $oAutoParkModel = new core\AutoParkModel('auto_park_model');
 
-        $oAutos = model\Auto::findAllObj();
+        $oAutos = models\Auto::findAllObj();
 
         foreach ($oAutos->attributes as $value) {
 
-            $oAuto = model\Auto::findById($value['id']);
+            $oAuto = models\Auto::findById($value['id']);
 
             $oAutoParkModel->brandAuto = $oAuto->getBrand();
             $oAutoParkItem = new core\AutoItemMini('auto_park_items');
@@ -47,8 +47,8 @@ class Controller_Autopark extends core\Controller
 
         $oAutoInfoItems = new core\AutoInfo('info_auto');
 
-        $idModel = model\ModelAuto::findLineByCategory('nameModel', $modelName)->getId();
-        $oAuto = model\Auto::findLineByCategory('idModel', $idModel);
+        $idModel = models\ModelAuto::findLineByCategory('nameModel', $modelName)->getId();
+        $oAuto = models\Auto::findLineByCategory('idModel', $idModel);
 
         $oAutoInfoItems->name = $oAuto->getNameModel();
         $oAutoInfoItems->brand = $oAuto->getBrand();

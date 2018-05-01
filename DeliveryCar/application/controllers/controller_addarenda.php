@@ -2,8 +2,9 @@
 
 namespace application\controllers;
 
-use application\model;
+use application\models;
 use application\core;
+use DateTime;
 
 class Controller_Addarenda extends core\Controller{
     public function __construct(){
@@ -11,18 +12,23 @@ class Controller_Addarenda extends core\Controller{
 
     function action_index()
     {
-        $endingDate = (isset($_POST['ending_date'])) ? (int)$_POST['ending_date'] : 0;
-        var_dump($endingDate);
+        $endingDate = (isset($_POST['ending_date'])) ? $_POST['ending_date'] : 0;
 
-        $oAutos = model\Auto::findAllObj();
+
+        $str_to_date = DateTime::createFromFormat('d-m-Y', $endingDate)->format('Y-d-m');
+
+
+        //var_dump( $str_to_date);
+
+        $oAutos = models\Auto::findAllObj();
         $statusAuto = [];
 
         foreach ($oAutos->attributes as $value) {
-            $oAuto = model\Auto::findById($value['id']);
-            $oAuto->StatusAdd($endingDate);
+            $oAuto = models\Auto::findById($value['id']);
+            $oAuto->StatusAdd($str_to_date);
             $statusAuto[$oAuto->getNameModel()] = $oAuto->getStatus();
         }
-
-        var_dump( $statusAuto);
+        echo json_encode($statusAuto);
+        //var_dump ($statusAuto);
     }
 }

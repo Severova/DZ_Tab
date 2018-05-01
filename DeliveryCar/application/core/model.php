@@ -138,13 +138,15 @@ abstract class Model extends PDO{
 
         !is_null(static::$db)?: static::$db = Db::instance();
 
+        $aRes=[];
+
         $table = static::TableName();
 
         $oQuery = Model::$db->prepare("SELECT $category FROM {$table} WHERE $what=:need_what");
         $oQuery->execute(['need_what' => $toWhich]);
         $aRes = $oQuery->fetchAll(PDO::FETCH_COLUMN);
 
-        return count($aRes)>1? $aRes : $aRes[0];
+        return $aRes;
     }
 
     /**

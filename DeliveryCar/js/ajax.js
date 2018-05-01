@@ -11,7 +11,7 @@ $(document).ready(function() {
 
             success: function (result) {
                 if (result) {
-                    $('.home-car-list').html(result);
+                    $('.scroll-content').html(result);
 
                     var start_date = new Date($('input.lease_start').val());
                     var ending_date = new Date($('input.lease_ending').val());
@@ -32,8 +32,6 @@ $(document).ready(function() {
                 }
             }
         });
-
-
     });
 
 });

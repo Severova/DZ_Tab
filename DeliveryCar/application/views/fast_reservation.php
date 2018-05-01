@@ -8,8 +8,8 @@
                         <h2>Быстрое бронирование:</h2>
                     </div>
                     <div class="quick-reservation__form">
-                        <input type="date" class="form-input lease_start" placeholder="Начало аренды">
-                        <input type="date" class="form-input lease_ending" placeholder="Окончание аренды" >
+                        <input type="date" class="form-input lease_start" value="<?= date('m-d-Y') ?>" placeholder="Начало аренды">
+                        <input type="date" class="form-input lease_ending" placeholder="Конец аренды">
                         <select name="" id="select">
 
                             <option value="0">Все марки</option>

@@ -1,5 +1,5 @@
 <?php
-namespace application\model;
+namespace application\models;
 use application\core\Model;
 
 /**
@@ -54,12 +54,15 @@ class Auto extends Model {
     }
 
     public function getNameModel(){
-        return ModelAuto::findById($this->getIdModel())->getNameModel() ?: null;
+        if(ModelAuto::findById($this->getIdModel())) {
+            return ModelAuto::findById($this->getIdModel())->getNameModel() ?: null;
+        }
     }
 
     public function getBrand(){
-
-        return BrandAuto::findById((ModelAuto::findById($this->getIdModel())->getIdBrand()))->getNameBrand() ?: null;
+        if (ModelAuto::findById($this->getIdModel())&& (ModelAuto::findById($this->getIdModel())->getIdBrand())) {
+            return BrandAuto::findById((ModelAuto::findById($this->getIdModel())->getIdBrand()))->getNameBrand() ?: null;
+        }
     }
 
     public function getDrivingExperience(){
@@ -95,7 +98,9 @@ class Auto extends Model {
     }
 
     public function getImg(){
-        return ImageAuto::findLineByCategory('idAuto', $this->getId())->getImgAuto() ?: null;
+        if (ImageAuto::findLineByCategory('idAuto', $this->getId())) {
+            return ImageAuto::findLineByCategory('idAuto', $this->getId())->getImgAuto() ?: null;
+        }
     }
 
     public function StatusAdd($date)
@@ -105,13 +110,22 @@ class Auto extends Model {
 
         $oInsuranceAuto = InsuranceAuto::findLineByCategory('idAuto', $this->getId());
         $aReturnDateByRContract = RentalContract::getListByCategory('returnDate', 'idAuto', $this->getId());
-        if (is_null($oInsuranceAuto) || is_null($aReturnDateByRContract)) {
-            $status = 'свободна';
-        } else {
-            $status = ($date < $oInsuranceAuto->getDateInsEnd()
-                && $date < $oInsuranceAuto->getDateToEnd()
-                && $date > max($aReturnDateByRContract)) ? 'арендована' : 'свободна';
+
+        if (!is_null($aReturnDateByRContract)) {
+            foreach ($aReturnDateByRContract as $value) {
+                $status = ($date > $value) ? 'свободна' : 'арендована';
+                if ($status=='арендована') {
+                    return static::setStatus($status);
+                }
+            }
         }
-        return static::setStatus($status);
+        if (is_null($oInsuranceAuto) && is_null($aReturnDateByRContract)) {
+            $status = 'свободна';
+            return static::setStatus($status);
+
+        } elseif (!is_null($oInsuranceAuto)) {
+            $status = ($date < $oInsuranceAuto->getDateInsEnd() &&  $date < $oInsuranceAuto->getDateToEnd() )? 'свободна' : 'арендована';
+            return static::setStatus($status);
+        }
     }
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 26 2018 г., 00:35
+-- Время создания: Май 01 2018 г., 22:04
 -- Версия сервера: 5.6.37
 -- Версия PHP: 7.1.7
 
@@ -106,7 +106,10 @@ INSERT INTO `auto` (`id`, `idModel`, `stateNumber`, `status`, `description`, `di
 (1, 1, 'Е222ХН98', 'свободна', NULL, NULL),
 (2, 2, 'Е222ХН98', 'свободна', NULL, NULL),
 (3, 3, '787654', 'свободна', NULL, NULL),
-(4, 4, '6746736', 'свободна', '- это современный автомобиль в кузове седан. Авто идеально подходит для больших городов, таких как Москва. Среди всех автомобилей бизнес-сегмента А6 считается одним из эталонов. Прокат такого авто позволит наслаждаться каждой поездкой. Салон А6 имеет стильный дизайн и выполнен с учетом максимального комфорта для пассажира. А внешний вид автомобиля заслуживает отдельного внимания. После рестайлинга автомобиль посвежел и приобрел более привлекательный вид. Одним из главных усовершенствований стали светодиодные фары.', 'Успешному человеку нужен соответствующий автомобиль, поэтому прокат Audi A6– это самый лучший выбор из всех возможных.');
+(4, 4, '6746736', 'свободна', '- это современный автомобиль в кузове седан. Авто идеально подходит для больших городов, таких как Москва. Среди всех автомобилей бизнес-сегмента А6 считается одним из эталонов. Прокат такого авто позволит наслаждаться каждой поездкой. Салон А6 имеет стильный дизайн и выполнен с учетом максимального комфорта для пассажира. А внешний вид автомобиля заслуживает отдельного внимания. После рестайлинга автомобиль посвежел и приобрел более привлекательный вид. Одним из главных усовершенствований стали светодиодные фары.', 'Успешному человеку нужен соответствующий автомобиль, поэтому прокат Audi A6– это самый лучший выбор из всех возможных.'),
+(5, 5, 'H777YT77', 'свободна', 'оснащен четырехцилиндровым бензиновым двигателем, исключительно сбалансированным и эффективным. Данный легкий и компактный двигатель, оборудованный системой регулировки фаз газораспределения Dual VVT-i, развивает мощность 184 л.с., передаваемую на передние колеса посредством 6-ступенчатой автоматической коробки передач с режимом секвентального переключения. Расход топлива составляет всего 7,9 литров на 100 километров, а уровень выброса CO2 равен 190 грамм на 1 км. Для обеспечения максимально тихой работы инженеры Lexus разработали специальное покрытие для поршней и приводных механизмов двигателя. Оно способствует большей плавности работы, снижает трение и уровень шума.', 'Lexus ES устанавливает высокую планку изящества и роскоши для премиальных бизнес-седанов. Все, к чему бы Вы не прикоснулись в Lexus ES, говорит о высочайшем качестве, начиная с рулевого колеса с кожаной отделкой и заканчивая великолепными деталями с прострочкой, дополняющими вставки из лакированного дерева аналоговые часы на центральной консоли.'),
+(6, 6, '564RY4563', 'свободна', 'спортивный и стремительный. В аэродинамически выверенной передней части доминирует рельефная решетка Singleframe с цельной рамкой. Четко выраженная волнообразная плечевая линия визуально разделяет автомобиль при взгляде сбоку. Рельефные очертания колесных арок указывают на полный привод quattro, а плоская крыша плавно нисходит к задней части. Горизонтальные линии сзади производят впечатление размаха и значимости. Задние фонари дополнительно могут оснащаться динамическими указателями поворота. Крышка багажного отделения заходит на задние стойки кузова — типичное дизайнерское решение для моделей Audi Q. Вставка диффузора обрамляет патрубки системы выпуска.', NULL),
+(7, 7, '7463356', 'свободна', 'обладает эффектной решеткой радиатора веретенообразной формы со стильными деталями окантовки и противотуманных фар. Испытайте новый уровень городской мобильности, выбрав версию с одним из трех типов двигателя - атмосферным, турбированным или гибридной установкой.', 'Созданный для города, этот кроссовер сочетает дерзкий дизайн с интуитивно понятными технологиями, чтобы сделать ваши поездки особенными.');
 
 -- --------------------------------------------------------
 
@@ -158,7 +161,8 @@ INSERT INTO `BrandAuto` (`id`, `nameBrand`) VALUES
 (3, 'Ferrari'),
 (4, 'Jaguar'),
 (5, 'Mercedes'),
-(6, 'Porshe');
+(6, 'Porshe'),
+(7, 'LEXUS');
 
 -- --------------------------------------------------------
 
@@ -168,9 +172,7 @@ INSERT INTO `BrandAuto` (`id`, `nameBrand`) VALUES
 
 CREATE TABLE `client` (
   `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `surname` varchar(255) NOT NULL,
-  `patronymic` varchar(255) NOT NULL,
+  `fio` varchar(255) NOT NULL,
   `numberDriverLicense` int(11) NOT NULL,
   `dateDriverLicense` date NOT NULL,
   `phoneNumber` int(11) NOT NULL,
@@ -178,15 +180,9 @@ CREATE TABLE `client` (
   `passportSeries` int(11) NOT NULL,
   `passportIssuedBy` varchar(255) NOT NULL,
   `dob` date NOT NULL,
-  `regAddress` varchar(255) NOT NULL
+  `regAddress` varchar(255) NOT NULL,
+  `email` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Дамп данных таблицы `client`
---
-
-INSERT INTO `client` (`id`, `name`, `surname`, `patronymic`, `numberDriverLicense`, `dateDriverLicense`, `phoneNumber`, `passportID`, `passportSeries`, `passportIssuedBy`, `dob`, `regAddress`) VALUES
-(1, 'Иван', 'Иванов', 'Иванович', 12345, '2018-04-01', 890098765, 3435, 353543, '343453', '2018-04-01', '35345');
 
 -- --------------------------------------------------------
 
@@ -226,7 +222,7 @@ CREATE TABLE `discount` (
 
 INSERT INTO `discount` (`id`, `idModel`, `percent`, `description`) VALUES
 (1, 1, 30, NULL),
-(2, 4, 50, NULL);
+(2, 2, 50, NULL);
 
 -- --------------------------------------------------------
 
@@ -267,7 +263,21 @@ INSERT INTO `ImageAuto` (`id`, `idAuto`, `imgAuto`, `otherImgAuto`) VALUES
 (21, 1, '', '15.jpg'),
 (22, 1, '', '13.jpg'),
 (23, 1, '', '12.jpg'),
-(24, 1, '', '11.jpg');
+(24, 1, '', '11.jpg'),
+(25, 5, 'slider.png', '1.jpg'),
+(26, 5, '', '2.jpg'),
+(28, 5, '', '4.jpg'),
+(29, 5, '', '5.jpg'),
+(30, 6, 'slider.png', '1.jpg'),
+(31, 6, '', '2.jpg'),
+(32, 6, '', '3.jpg'),
+(33, 6, '', '4.jpg'),
+(34, 6, '', '5.jpg'),
+(35, 7, 'slider.png', '1.jpg'),
+(36, 7, '', '2.jpg'),
+(37, 7, '', '3.jpg'),
+(38, 7, '', '4.jpg'),
+(39, 7, '', '5.jpg');
 
 -- --------------------------------------------------------
 
@@ -288,7 +298,7 @@ CREATE TABLE `InsuranceAuto` (
 --
 
 INSERT INTO `InsuranceAuto` (`id`, `numberInsPolicy`, `dateInsEnd`, `dateToEnd`, `idAuto`) VALUES
-(1, 2445, '2018-04-15', '2018-04-15', 1);
+(1, 2445, '2018-05-31', '2018-05-24', 1);
 
 -- --------------------------------------------------------
 
@@ -312,9 +322,12 @@ CREATE TABLE `ModelAuto` (
 
 INSERT INTO `ModelAuto` (`id`, `idBodyAuto`, `idBrand`, `idTransmission`, `nameModel`, `drivingExperience`, `price`) VALUES
 (1, 5, 1, 4, 'M4 COMPETITION', 5, 6500),
-(2, 2, 1, 3, '400 i', 5, 7000),
-(3, 3, 1, 2, '218 i Coupe', 5, 9000),
-(4, 2, 2, 2, 'A6', 4, 8000);
+(2, 2, 1, 3, '400 I', 5, 7000),
+(3, 3, 1, 2, '218 I COUPE', 5, 9000),
+(4, 2, 2, 2, 'A6', 4, 8000),
+(5, 2, 7, 3, 'ES', 3, 6500),
+(6, 2, 2, 3, 'Q5', 4, 4000),
+(7, 2, 7, 2, 'NX', 2, 3500);
 
 -- --------------------------------------------------------
 
@@ -325,28 +338,9 @@ INSERT INTO `ModelAuto` (`id`, `idBodyAuto`, `idBrand`, `idTransmission`, `nameM
 CREATE TABLE `pages` (
   `id` int(10) UNSIGNED NOT NULL,
   `pageTitle` varchar(255) NOT NULL,
-  `text` text NOT NULL
+  `text` text NOT NULL,
+  `adress` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Дамп данных таблицы `pages`
---
-
-INSERT INTO `pages` (`id`, `pageTitle`, `text`) VALUES
-(1, 'Проба 9', 'Проба 2'),
-(2, 'Проба 2', 'Проба 2'),
-(3, 'Проба 2', 'Проба 2'),
-(4, 'Проба 2', 'Проба 2'),
-(5, 'Проба 2', 'Проба 2'),
-(6, 'Проба 2', 'Проба 2'),
-(7, 'Проба 2', 'Проба 2'),
-(8, 'Проба 2', 'Проба 2'),
-(9, 'Проба 2', 'Проба 2'),
-(10, 'Array', 'Array'),
-(11, 'Проба 2', 'Проба 2'),
-(12, 'Проба 3', 'Проба 3'),
-(13, 'Проба 3', 'Проба 3'),
-(14, 'Проба 3', 'Проба 3');
 
 -- --------------------------------------------------------
 
@@ -368,14 +362,6 @@ CREATE TABLE `RentalContract` (
   `summ` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Дамп данных таблицы `RentalContract`
---
-
-INSERT INTO `RentalContract` (`id`, `idClient`, `idAuto`, `conclusionDate`, `receiptAutoDate`, `receiptAutoTime`, `placeReceipt`, `returnDate`, `returnTime`, `placeReturn`, `summ`) VALUES
-(1, 1, 1, '2018-04-01', '2018-04-01', '02:00:00', 'Ул Твардовского', '2018-04-05', '08:00:00', 'Ул Твардовского', 13265),
-(3, 1, 1, '2018-04-09', '2018-04-10', '13:00:00', 'jhjh', '2018-11-08', '08:00:00', 'hvhjg', 407800);
-
 -- --------------------------------------------------------
 
 --
@@ -388,31 +374,22 @@ CREATE TABLE `reviews` (
   `titleReviews` varchar(255) NOT NULL,
   `text` text NOT NULL,
   `date` date NOT NULL,
-  `time` time NOT NULL,
-  `email` varchar(255) NOT NULL
+  `status` set('опубликован','проверяется') NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `img` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Дамп данных таблицы `reviews`
 --
 
-INSERT INTO `reviews` (`id`, `userName`, `titleReviews`, `text`, `date`, `time`, `email`) VALUES
-(1, 'Проба 80', '2', '8', '0000-00-00', '00:00:02', '2'),
-(2, 'Проба 6', 'Проба 3', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
-(3, 'Проба 6', 'Проба 3', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
-(4, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
-(5, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
-(6, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
-(7, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
-(8, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
-(9, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
-(10, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
-(11, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
-(12, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
-(13, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
-(14, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
-(15, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com'),
-(16, 'Проба 610', 'Проба 310', 'Проба 3', '1999-11-11', '00:00:03', 'fdgkjj@jdkjfh.com');
+INSERT INTO `reviews` (`id`, `userName`, `titleReviews`, `text`, `date`, `status`, `email`, `img`) VALUES
+(1, 'Смирнов Вячеслав Иванович', 'Лучшая фирма аренды!', 'Работа/ условия/ время на оформление и состояние автопарка машин на высоте! Советую сравнить их работу с другими прокатами города! Мне очень понравилось. Цены меня устраивают.', '2018-05-01', 'опубликован', 'smirnov@gt.ru', 'jon.jpg'),
+(2, 'Иванов Иван Анатольевич', 'Лучший прокат авто!', 'Из прокатов лучше - ПОКА!!! - не видел! Сел в новый автомобиль DMV M4 (пробег чуть больше 2000 км.) всего за 6000 р/сутки. Ездил/потом по телефону продлил. Сдал машину без проблем за пару минут. Только плюсы данному прокату. Скажу - спасибо!', '2018-05-01', 'опубликован', 'ivanov@gt.ru', 'reviews.jpg'),
+(3, 'Григорьев Станислав Иванович', 'Отличная компания!', 'Отличная компания! Машины все новые и в идеальном состоянии! Нет претензий. Спасибо!', '2018-05-01', 'опубликован', 'sevr@ser.ru', 'hhh.jpg'),
+(4, 'вловлаоы', 'jehfehf', 'yhtgrsfsewerr', '2018-05-01', 'проверяется', 'kdkkf@dkjsj.ri', ''),
+(5, 'вловлаоы', 'jehfehf', 'yhtgrsfsewerr', '2018-05-01', 'проверяется', 'kdkkf@dkjsj.ri', ''),
+(6, 'вловлаоы', 'jehfehf', 'yhtgrsfsewerr', '2018-05-01', 'проверяется', 'kdkkf@dkjsj.ri', '');
 
 -- --------------------------------------------------------
 
@@ -576,7 +553,7 @@ ALTER TABLE `AdditionalOption`
 -- AUTO_INCREMENT для таблицы `auto`
 --
 ALTER TABLE `auto`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT для таблицы `BodyAuto`
 --
@@ -586,12 +563,12 @@ ALTER TABLE `BodyAuto`
 -- AUTO_INCREMENT для таблицы `BrandAuto`
 --
 ALTER TABLE `BrandAuto`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT для таблицы `client`
 --
 ALTER TABLE `client`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT для таблицы `deposit`
 --
@@ -606,7 +583,7 @@ ALTER TABLE `discount`
 -- AUTO_INCREMENT для таблицы `ImageAuto`
 --
 ALTER TABLE `ImageAuto`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 --
 -- AUTO_INCREMENT для таблицы `InsuranceAuto`
 --
@@ -616,27 +593,27 @@ ALTER TABLE `InsuranceAuto`
 -- AUTO_INCREMENT для таблицы `ModelAuto`
 --
 ALTER TABLE `ModelAuto`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT для таблицы `pages`
 --
 ALTER TABLE `pages`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT для таблицы `RentalContract`
 --
 ALTER TABLE `RentalContract`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT для таблицы `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT для таблицы `SelectedOption`
 --
 ALTER TABLE `SelectedOption`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 --
 -- AUTO_INCREMENT для таблицы `transmission`
 --

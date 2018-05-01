@@ -3,7 +3,7 @@
 namespace application\controllers;
 
 use application\core;
-use application\model;
+use application\models;
 
 class Controller_Fastreservation extends core\Controller{
     public function __construct(){
@@ -14,10 +14,10 @@ class Controller_Fastreservation extends core\Controller{
         $idBrand = (isset($_POST['idBrand'])) ? (int)$_POST['idBrand'] : 0;
 
         if($idBrand==0){
-            $oModel = (model\ModelAuto::findAllObj())->attributes;
+            $oModel = (models\ModelAuto::findAllObj())->attributes;
 
         } elseif($idBrand!=0) {
-            $oModel = model\ModelAuto::getListObjectByCategory('id','idBrand', $idBrand);
+            $oModel = models\ModelAuto::getListObjectByCategory('id','idBrand', $idBrand);
         }
 
         $out = new core\ContentBlock('ajax_fast');
@@ -34,10 +34,11 @@ class Controller_Fastreservation extends core\Controller{
             $oItemFastReservations = new core\AutoItemMini('fast_reservation_items');
 
             if($idBrand==0){
-                $oAuto = model\Auto::findById($value['id']);
+                $oAuto = models\Auto::findById($value['id']);
             } else {
-                $oAuto = model\Auto::findLineByCategory('idModel',$value->getId());
+                $oAuto = models\Auto::findLineByCategory('idModel',$value->getId());
             }
+
 
             $oItemFastReservations->name = $oAuto->getNameModel();
             $oItemFastReservations->brand = $oAuto->getBrand();

@@ -1,6 +1,6 @@
 <?php
 
-namespace application\model;
+namespace application\models;
 use application\core\Model;
 
 
@@ -23,10 +23,6 @@ class ModelAutoFastReservation extends Model{
 
     }
 
-
-}
-
-class Transmission extends Model{
 
 }
 

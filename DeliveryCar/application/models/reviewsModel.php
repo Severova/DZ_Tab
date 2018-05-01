@@ -1,5 +1,5 @@
 <?php
-namespace application\model;
+namespace application\models;
 use application\core\Model;
 
 /**
@@ -9,8 +9,14 @@ use application\core\Model;
  * @var string $date
  * @var string $time
  * @var string $email
+ * @var string $img
  */
 
 class Reviews extends Model {
+    static function TableName(){
+
+        return 'reviews';
+    }
+
 
 }

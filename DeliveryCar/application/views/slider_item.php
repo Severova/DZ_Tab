@@ -10,7 +10,7 @@
 			<strong><? if ($percent) echo (($price*(100-$percent))/100) ?></strong> <span><? if ($price) echo $price ?></span> руб./час
 		</div>
 		<div class="head-stock__link">
-			<a href="#" class="btn">Заказать</a>
+			<a href="/order/add/<?= str_replace(' ','_',$name) ?>" class="btn">Заказать</a>
 		</div>
 	</div>
 </div>
