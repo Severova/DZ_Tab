@@ -35,7 +35,8 @@ class Controller_Addord extends core\Controller
                          -> setPlaceReceipt($_POST['place'])
                          -> setReturnDate($dateEnding)
                          -> setIdAuto(models\Auto::findLineByCategory('idModel', models\ModelAuto::findLineByCategory('nameModel',$_POST['name_auto'])->getId())->getId())
-                         -> setSumm($_POST['summ']);
+                         -> setSumm($_POST['summ'])
+                         -> addPassword();
         $oRentalContract->save();
 
 
@@ -47,8 +48,15 @@ class Controller_Addord extends core\Controller
                 $oSelectedOption -> save();
             }
         }
+        $message = "Добрый день, ".$_POST['FIO'].'! Спасибо за Ваш заказ. Ознакомиться с деталями заказа вы можете по ссылке: 
+                    <a href=\"DeliveryCar/aboutord/information/'. $oRentalContract->getPassword().'\">Просмотреть детали заказа</a>
+                        <p>С уважением, DeliveryCar</p>';
 
-        $oPages->setText( "<h1>Спасибо за ваш заказ!</h1> <p>Наш менеджер перезвонит вам в течении 20 минут.</p>");
+        mail ($_POST['email'] , 'Заказ DeliveryCar' , $message );
+
+        $oPages->setText( '<h1>Спасибо за ваш заказ!</h1> <p>Наш менеджер перезвонит вам в течении 20 минут.</p> 
+                           <a href="/aboutord/information/'. $oRentalContract->getPassword().'">Просмотреть детали заказа</a>');
+
 
         $this->oContent->Content->addItem($oPages);
 

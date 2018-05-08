@@ -1,6 +1,7 @@
 <?php
 namespace application\models;
 use application\core\Model;
+use DateTime;
 
 /**
  * @var int $idModel
@@ -25,7 +26,6 @@ class Auto extends Model {
 
     public function getOption(){
         $name = $this->getNameOption();
-        $option = [];
         foreach ($name as $value) {
             $price = AdditionalOption::findLineByCategory('nameOptions',$value)->getPrice();
             $option[$price]=$value;
@@ -103,29 +103,53 @@ class Auto extends Model {
         }
     }
 
-    public function StatusAdd($date)
+    public function StatusAdd($startDate, $endDate)
     {
         //вычисляем занята или свободна машинка в зависимости от даты
         //возврата авто из договора, а также даты окончания страховки и даты окончания ТО
 
         $oInsuranceAuto = InsuranceAuto::findLineByCategory('idAuto', $this->getId());
-        $aReturnDateByRContract = RentalContract::getListByCategory('returnDate', 'idAuto', $this->getId());
+        $oRcontract = RentalContract::findOllLineByCategory('idAuto', $this->getId());
+        //$aReturnDateByRContract = RentalContract::getListByCategory('returnDate', 'idAuto', $this->getId());
+        //$aReceiptDateByRContract = RentalContract::getListByCategory('receiptAutoDate', 'idAuto', $this->getId());
 
-        if (!is_null($aReturnDateByRContract)) {
-            foreach ($aReturnDateByRContract as $value) {
-                $status = ($date > $value) ? 'свободна' : 'арендована';
-                if ($status=='арендована') {
-                    return static::setStatus($status);
+        $dateStart = DateTime::createFromFormat('m-d-Y', $startDate)->format('Y-m-d');
+
+
+
+        if (!is_null($oRcontract)) {
+            foreach ($oRcontract as $value) {
+                foreach ($value as $modelvalue){
+                    if(((strtotime($dateStart) >= strtotime($modelvalue['receiptAutoDate'])) && (strtotime($dateStart) <= strtotime($modelvalue['returnDate'])))||
+                        ((strtotime($endDate) <= strtotime($modelvalue['returnDate'])) && (strtotime($endDate) >= strtotime($modelvalue['receiptAutoDate'])))){
+                        $status = 'арендована' ;
+                        return static::setStatus($status);
+                   } elseif ((strtotime($dateStart) <= strtotime($modelvalue['receiptAutoDate'])) && (strtotime($endDate) >= strtotime($modelvalue['returnDate']))) {
+                        $status = 'арендована';
+                        return static::setStatus($status);
+                       }
+
                 }
             }
         }
-        if (is_null($oInsuranceAuto) && is_null($aReturnDateByRContract)) {
+//        if((strtotime($dateStart) >= strtotime($modelvalue['receiptAutoDate'])) && (strtotime($endDate) <= strtotime($modelvalue['returnDate']))){
+//            $status = 'арендована' ;
+//            return static::setStatus($status);
+//        } elseif ((strtotime($dateStart) <= strtotime($modelvalue['receiptAutoDate'])) && (strtotime($endDate) >= strtotime($modelvalue['returnDate']))) {
+//            $status = 'арендована';
+//            return static::setStatus($status);
+//        }
+
+        if (is_null($oInsuranceAuto) && is_null($oRcontract)) {
             $status = 'свободна';
             return static::setStatus($status);
 
         } elseif (!is_null($oInsuranceAuto)) {
-            $status = ($date < $oInsuranceAuto->getDateInsEnd() &&  $date < $oInsuranceAuto->getDateToEnd() )? 'свободна' : 'арендована';
+            $status = ($endDate < $oInsuranceAuto->getDateInsEnd() &&  $endDate < $oInsuranceAuto->getDateToEnd() )? 'свободна' : 'арендована';
             return static::setStatus($status);
         }
+        $status = 'свободна';
+        return static::setStatus($status);
+
     }
 }

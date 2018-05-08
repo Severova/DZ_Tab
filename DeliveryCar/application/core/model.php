@@ -129,6 +129,25 @@ abstract class Model extends PDO{
     }
 
     /**
+     * @param string $what
+     * @param string $toWhich
+     * @return null|static
+     */
+
+    public static function findOllLineByCategory($what, $toWhich){
+
+        !is_null(static::$db)?: static::$db = Db::instance();
+
+        $table = static::TableName();
+
+        $oQuery = Model::$db->prepare("SELECT * FROM {$table} WHERE $what=:need_what");
+        $oQuery->execute(['need_what' => $toWhich]);
+        $aRes = $oQuery->fetchAll(PDO::FETCH_ASSOC);
+
+        return $aRes? new static($aRes):null;
+    }
+
+    /**
      * @param string $category
      * @param string $what
      * @param string $toWhich
@@ -161,15 +180,16 @@ abstract class Model extends PDO{
         $aRes = static::getListByCategory($category, $what, $toWhich);
         $results = [];
 
-        if (count($aRes) > 1){
+        if (count($aRes) !=0){
             foreach ($aRes as $value) {
                 $results[] = new static(static::findLineByCategory($category, $value));
             }
         } elseif (count($aRes) == 0) {
             return null;
-        } else {
-            $results[] = new static(static::findLineByCategory($category, $aRes));
         }
+//        else {
+//            $results[] = new static(static::findLineByCategory($category, $aRes));
+//        }
 
         return $results;
     }

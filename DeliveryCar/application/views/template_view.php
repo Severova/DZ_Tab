@@ -21,7 +21,6 @@
     <link rel="stylesheet" href="/libs/selectric/selectric.css">
     <link rel="stylesheet" href="/libs/flatpickr/flatpickr.min.css">
     <link rel="stylesheet" href="/libs/OwlCarousel/owl.carousel.min.css">
-    <link rel="stylesheet" href="/libs/scrollbar/jquery.scrollbar.css">
     <link rel="stylesheet" href="/libs/fotorama/fotorama.css" />
     <link rel="stylesheet" href="/libs/fancybox/dist/jquery.fancybox.min.css" />
 
@@ -113,7 +112,6 @@
 <script src="/libs/flatpickr/flatpickr.min.js"></script>
 <script src="/libs/flatpickr/l10n/ru.js"></script>
 <script src="/libs/OwlCarousel/owl.carousel.min.js"></script>
-<script src="/libs/scrollbar/jquery.scrollbar.min.js"></script>
 <script src="/libs/fotorama/fotorama.js"></script>
 <script src="/libs/fancybox/dist/jquery.fancybox.min.js"></script>
 

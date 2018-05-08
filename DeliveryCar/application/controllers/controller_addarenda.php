@@ -13,22 +13,26 @@ class Controller_Addarenda extends core\Controller{
     function action_index()
     {
         $endingDate = (isset($_POST['ending_date'])) ? $_POST['ending_date'] : 0;
+        $startDate = (isset($_POST['lease_start'])) ? $_POST['lease_start'] : 0;
+        if($endingDate!=0) {
 
 
-        $str_to_date = DateTime::createFromFormat('d-m-Y', $endingDate)->format('Y-d-m');
+            $str_to_date = DateTime::createFromFormat('m-d-Y', $endingDate)->format('Y-m-d');
 
 
-        //var_dump( $str_to_date);
+            //var_dump( $str_to_date);
 
-        $oAutos = models\Auto::findAllObj();
-        $statusAuto = [];
+            $oAutos = models\Auto::findAllObj();
+            $statusAuto = [];
 
-        foreach ($oAutos->attributes as $value) {
-            $oAuto = models\Auto::findById($value['id']);
-            $oAuto->StatusAdd($str_to_date);
-            $statusAuto[$oAuto->getNameModel()] = $oAuto->getStatus();
+            foreach ($oAutos->attributes as $value) {
+                $oAuto = models\Auto::findById($value['id']);
+                $oAuto->StatusAdd($startDate, $str_to_date);
+                $statusAuto[$oAuto->getNameModel()] = $oAuto->getStatus();
+            }
+            //echo json_encode($statusAuto);
+            var_dump($statusAuto);
         }
-        echo json_encode($statusAuto);
-        //var_dump ($statusAuto);
+
     }
 }

@@ -19,6 +19,7 @@ $(document).ready(function() {
             var start_date = new Date($('input.lease_start').val());
             var ending_date = new Date($('input.lease_ending').val());
             var dates = $('input.lease_ending').val();
+            var datesStart = $('input.lease_start').val();
 
             var full_date = Math.ceil(Math.abs(start_date.getTime() - ending_date.getTime()) / (1000 * 3600 * 24));
 
@@ -37,8 +38,8 @@ $(document).ready(function() {
             $.ajax({
                 url: "/addarenda",
                 type: "POST",
-                data: {ending_date: dates},
-                dataType: 'json',
+                data: {ending_date: dates, lease_start: datesStart},
+                dataType: 'html',
 
                 success: function (result) {
                     console.log(result);
@@ -52,11 +53,40 @@ $(document).ready(function() {
         }
     });
 
+    $(function  () {
+        $.summDateOrder =  function () {
+            var start_date = new Date($('input.lease_start_order').val());
+            var ending_date = new Date($('input.lease_ending_order').val());
+            var auto_price = $('.basic-line span strong').text();
+
+            var full_date = Math.ceil(Math.abs(start_date.getTime() - ending_date.getTime()) / (1000 * 3600 * 24));
+
+            var itog_auto_price = auto_price * full_date;
+
+            var options_price = 0;
+
+            $('.options_checkbox').each(function(){
+
+                if($(this).prop("checked")) {
+                    options_price = $(this).data('price');
+                }
+            });
+            $('.ordering__durability p span').html(Math.ceil(Math.abs(start_date.getTime() - ending_date.getTime()) / (1000 * 3600 * 24)));
+            $('.ordering-itog_st').html(parseInt(itog_auto_price) + options_price);
+            $('input[name="summ"]').val(parseInt(itog_auto_price) + options_price);
+            // $('input[name="start_date"]').val($('input.lease_start_order').val());
+            // $('input[name="ending_date"]').val($('input.lease_ending_order').val());
+
+
+        };
+    });
+
+
 
     const dateObj = {
         date1: null,
-        date2: null,
-    }
+        date2: null
+    };
 
     const endDate = flatpickr('input.lease_ending', {
         altInput: true,
@@ -65,12 +95,18 @@ $(document).ready(function() {
         minDate: new Date(),
         "locale": "ru",
 
-        onChange: function() {
-            $.summDate();
+        onChange([date]) {
+            $(function () {
+                $.summDate();
+            });
+
+            dateObj.date1 = date;
+
+            startDate.set('maxDate', dateObj.date1.fp_incr(-1));
         }
 
     });
-    flatpickr('input.lease_start', {
+    const startDate = flatpickr('input.lease_start', {
         altInput: true,
         altFormat: "d-m-Y",
         dateFormat: "m-d-Y",
@@ -78,9 +114,7 @@ $(document).ready(function() {
         "locale": "ru",
 
 
-
         onChange([date]) {
-
             $(function () {
                 $.summDate();
             });
@@ -88,45 +122,25 @@ $(document).ready(function() {
             dateObj.date1 = date;
 
             endDate.set('minDate', dateObj.date1.fp_incr(1));
-
         }
     });
 
     // Order page
-    flatpickr('input.lease_start_order', {
+    const startOrdDate = flatpickr('input.lease_start_order', {
         altInput: true,
         altFormat: "d-m-Y",
         dateFormat: "m-d-Y",
         minDate: "today",
         "locale": "ru",
 
-        onChange: function() {
-
+        onChange([date]) {
             $(function () {
-                var start_date = new Date($('input.lease_start_order').val());
-                var ending_date = new Date($('input.lease_ending_order').val());
-                var auto_price = $('.basic-line span strong').text();
-
-                var full_date = Math.ceil(Math.abs(start_date.getTime() - ending_date.getTime()) / (1000 * 3600 * 24));
-
-                var itog_auto_price = auto_price * full_date;
-
-                var options_price = 0;
-
-                $('.options_checkbox').each(function(){
-
-                    if($(this).prop("checked")) {
-                        options_price = $(this).data('price');
-                    }
-                });
-                $('.ordering__durability p span').html(Math.ceil(Math.abs(start_date.getTime() - ending_date.getTime()) / (1000 * 3600 * 24)));
-                $('.ordering-itog_st').html(parseInt(itog_auto_price) + options_price);
-                $('input[name="summ"]').val(parseInt(itog_auto_price) + options_price);
-                $('input[name="start_date"]').val($('input.lease_start_order').val());
-
-
+                $.summDateOrder();
             });
 
+            dateObj.date1 = date;
+
+            endOrdDate.set('minDate', dateObj.date1.fp_incr(1));
         }
 
 
@@ -134,7 +148,7 @@ $(document).ready(function() {
 
 
 
-    flatpickr('input.lease_ending_order', {
+    const endOrdDate = flatpickr('input.lease_ending_order', {
         altInput: true,
         altFormat: "d-m-Y",
         dateFormat: "m-d-Y",
@@ -142,33 +156,15 @@ $(document).ready(function() {
         "locale": "ru",
 
 
-        onChange: function() {
-
-            $(function () {
-                var start_date = new Date($('input.lease_start_order').val());
-                var ending_date = new Date($('input.lease_ending_order').val());
-                var auto_price = $('.basic-line span strong').text();
-
-                var full_date = Math.ceil(Math.abs(start_date.getTime() - ending_date.getTime()) / (1000 * 3600 * 24));
-
-                var itog_auto_price = auto_price * full_date;
-
-                var options_price = 0;
-
-                $('.options_checkbox').each(function(){
-
-                    if($(this).prop("checked")) {
-                        options_price = $(this).data('price');
-                    }
+            onChange([date]) {
+                $(function () {
+                    $.summDateOrder();
                 });
-                $('.ordering__durability p span').html(Math.ceil(Math.abs(start_date.getTime() - ending_date.getTime()) / (1000 * 3600 * 24)));
-                $('.ordering-itog_st').html(parseInt(itog_auto_price) + options_price);
-                $('input[name="summ"]').val(parseInt(itog_auto_price) + options_price);
-                $('input[name="ending_date"]').val($('input.lease_ending_order').val());
 
-            });
+                dateObj.date1 = date;
+                startOrdDate.set('maxDate', dateObj.date1.fp_incr(-1));
+            }
 
-        }
     });
 
     $('.options_checkbox').on('click', function(){
@@ -202,8 +198,6 @@ $(document).ready(function() {
 		nav: 'thumbs'
 	});
 
-	jQuery('.scrollbar-inner ').scrollbar();
-
     $(".popup-link").fancybox({
         'speedIn': 500,
         'speedOut': 400,
@@ -211,6 +205,21 @@ $(document).ready(function() {
         'helpers': {
             'overlay': { 'locked': false }
         }
+    });
+
+    $('input[type="file"]').on('click', function(){
+        this.addEventListener('change', function () {
+            var splittedFakePath = this.value.split('\\');
+            document.querySelector('.file-label span').textContent =
+                splittedFakePath[splittedFakePath.length - 1];
+        });
+    });
+
+    $(".profile-order__old-btn span").on("click", function (e){
+        e.preventDefault();
+        var currentBlock = $('.profile-order__old');
+
+        currentBlock.slideToggle("slow")
     });
 	
 });

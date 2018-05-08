@@ -11,7 +11,7 @@ $(document).ready(function() {
 
             success: function (result) {
                 if (result) {
-                    $('.scroll-content').html(result);
+                    $('.home-car-list').html(result);
 
                     var start_date = new Date($('input.lease_start').val());
                     var ending_date = new Date($('input.lease_ending').val());

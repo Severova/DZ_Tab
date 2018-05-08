@@ -1,29 +1,21 @@
 <div class="page-ordering">
     <div class="container">
-        <h1 class="page-ordering__title">Оформление заказа:</h1>
+        <h1 class="page-ordering__title">Выбраное авто: <span><?= $brand ?> <?= $name ?></span></h1>
 
         <div class="row">
             <div class="col-md-4">
                 <div class="page-ordering__left">
                     <div class="page-ordering__photo">
                         <img src="<?= str_replace(' ','',"\\img\\Autopark\\{$brand}\\{$name}\\{$img}") ?>" alt="">
+                    </div>
 
-                        <p>Выбраное авто: <span><?= $brand ?> <?= $name ?></span></p>
-                    </div>
-                    <div class="page-ordering__date">
-                        <p>Период бронирования: </p>
-                        <label for="" class="form-label">Начало аренды</label>
-                        <input type="date" class="form-input lease_start_order" value="<?php echo $_POST['start_date']; ?>">
-                        <label for="" class="form-label">Окончание аренды</label>
-                        <input type="date" class="form-input lease_ending_order" value="<?php echo $_POST['ending_date']; ?>">
-                    </div>
                 </div>
             </div>
             <div class="col-md-8">
 
                 <div class="page-ordering__right">
                     <div class="page-ordering__right-title">
-                        Дополнительные опции:
+                        Оформление заказа:
                     </div>
 
                     <div class="basic-line">
@@ -41,20 +33,20 @@
                     </div>
                     <form method="POST" action="/addord">
 
-                        <div class="additional-options">
-                            <div class="additional-options__title">
-                                Дополнительные опции
-                            </div>
-                            <? if($options) {
-                                $i=0;
-                                foreach ($options as $priceOp => $nameOp) {?>
-                                <div class="form-chek">
-                                    <input type="checkbox" id="chek<?=$i?>" data-price="<?=$priceOp?>" value = "<?=$nameOp?>" class="options_checkbox" name="chb[]">
-                                    <label for="chek<?=$i?>"><?=$nameOp?> <span><?=$priceOp?></span></label>
+                        <div class="page-ordering__date">
+                            <p>Период бронирования: </p>
+
+                            <div class="page-ordering__date-row">
+                                <div class="page-ordering__date-col">
+                                    <label for="" class="form-label">Начало аренды</label>
+                                    <input type="date" class="form-input lease_start_order" value="<?php echo $_POST['start_date']; ?>" name="start_date">
                                 </div>
-                                <?$i++;
-                                }
-                            }?>
+                                <div class="page-ordering__date-col">
+                                    <label for="" class="form-label">Окончание аренды</label>
+                                    <input type="date" class="form-input lease_ending_order" value="<?php echo $_POST['ending_date']; ?>" name="ending_date">
+                                </div>
+                            </div>
+
                         </div>
 
                         <div class="user-info">
@@ -74,11 +66,27 @@
                                 <div class="col-md-6">
                                     <input type="text" class="form-input" name = "place" placeholder="Где можно забрать" required>
                                 </div>
-                                    <input type="hidden" value="<?php echo $_POST['start_date']; ?>" name="start_date">
-                                    <input type="hidden" value="<?php echo $_POST['ending_date']; ?>" name="ending_date">
-                                    <input type="hidden" value="<?= $name ?>" name="name_auto">
+                                <input type="hidden" value="<?= $name ?>" name="name_auto">
                             </div>
                         </div>
+
+                        <div class="additional-options">
+                            <div class="additional-options__title">
+                                Дополнительные опции
+                            </div>
+                            <? if($options) {
+                                $i=0;
+                                foreach ($options as $priceOp => $nameOp) {?>
+                                <div class="form-chek">
+                                    <input type="checkbox" id="chek<?=$i?>" data-price="<?=$priceOp?>" value = "<?=$nameOp?>" class="options_checkbox" name="chb[]">
+                                    <label for="chek<?=$i?>"><?=$nameOp?> <span><?=$priceOp?></span></label>
+                                </div>
+                                <?$i++;
+                                }
+                            }?>
+                        </div>
+
+
                     </div>
 
                     <div class="ordering-bottom">

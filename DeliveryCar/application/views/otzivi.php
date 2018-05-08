@@ -34,7 +34,7 @@
                         <textarea name="text" id="" class="form-textarea" placeholder="Отзыв"></textarea>
                         <div class="form-attachment">
                             <input type="file" id="attachment" name="file">
-                            <label for="attachment">Прикрепить фото</label>
+                            <label for="attachment" class="file-label"><span>Прикрепить фото</span></label>
                         </div>
                         <input type="submit" class="btn" id = 'reviews' value="Оставить отзыв">
                     </form>

@@ -14,14 +14,23 @@ use application\core\Model;
  * @var int $idAuto
  * @var int $summ
  * @var int $idSelectedOption
+ * @var string $password
  */
 
 class RentalContract extends Model {
 
-    public $idAuto;
-    public $receiptAutoDate;
-    public $returnDate;
-    public $summ;
+    public function addPassword(){
+        $chars="qazxswedcvfrtgbnhyujmkiolp1234567890QAZXSWEDCVFRTGBNHYUJMKIOLP";
+        $max=rand(5, 12);
+        $size=StrLen($chars)-1;
+        $password='';
+
+        while($max--)
+            $password.=$chars[rand(0,$size)];
+
+        return static::setPassword($password);
+
+    }
 
 
 

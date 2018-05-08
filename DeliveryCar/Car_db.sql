@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 01 2018 г., 22:04
+-- Время создания: Май 09 2018 г., 00:20
 -- Версия сервера: 5.6.37
 -- Версия PHP: 7.1.7
 
@@ -184,6 +184,15 @@ CREATE TABLE `client` (
   `email` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Дамп данных таблицы `client`
+--
+
+INSERT INTO `client` (`id`, `fio`, `numberDriverLicense`, `dateDriverLicense`, `phoneNumber`, `passportID`, `passportSeries`, `passportIssuedBy`, `dob`, `regAddress`, `email`) VALUES
+(1, 'Смирнов Иван Игнатьевич', 0, '0000-00-00', 3837, 0, 0, '', '0000-00-00', '', 'kdkkf@dkjsj.ri'),
+(2, 'Сергей', 0, '0000-00-00', 3837, 0, 0, '', '0000-00-00', '', 'kdkkf@dkjsj.ri'),
+(4, 'Смирнов Иван ', 0, '0000-00-00', 2147483647, 0, 0, '', '0000-00-00', '', 'sevr@ser.ru');
+
 -- --------------------------------------------------------
 
 --
@@ -298,7 +307,7 @@ CREATE TABLE `InsuranceAuto` (
 --
 
 INSERT INTO `InsuranceAuto` (`id`, `numberInsPolicy`, `dateInsEnd`, `dateToEnd`, `idAuto`) VALUES
-(1, 2445, '2018-05-31', '2018-05-24', 1);
+(1, 2445, '2018-06-14', '2018-06-22', 1);
 
 -- --------------------------------------------------------
 
@@ -359,8 +368,20 @@ CREATE TABLE `RentalContract` (
   `returnDate` date NOT NULL,
   `returnTime` time NOT NULL,
   `placeReturn` varchar(255) NOT NULL,
-  `summ` int(11) NOT NULL
+  `summ` int(11) NOT NULL,
+  `password` varchar(255) NOT NULL COMMENT 'Для страницы о заказе'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `RentalContract`
+--
+
+INSERT INTO `RentalContract` (`id`, `idClient`, `idAuto`, `conclusionDate`, `receiptAutoDate`, `receiptAutoTime`, `placeReceipt`, `returnDate`, `returnTime`, `placeReturn`, `summ`, `password`) VALUES
+(1, 1, 1, '0000-00-00', '2018-05-17', '00:00:00', 'eejjhds', '2018-06-02', '00:00:00', '', 73000, ''),
+(9, 1, 1, '0000-00-00', '2018-05-14', '00:00:00', 'eejjhds', '2018-05-31', '00:00:00', '', 68450, 'HDaRFPd'),
+(13, 1, 3, '0000-00-00', '2018-05-16', '00:00:00', 'eejjhds', '2018-05-31', '00:00:00', '', 135200, 'GNnESoBduUt'),
+(15, 1, 5, '0000-00-00', '2018-05-07', '00:00:00', 'dsjcghs', '2018-05-12', '00:00:00', '', 32700, 'nUnq6Qx8E'),
+(19, 1, 1, '0000-00-00', '2018-05-17', '00:00:00', 'dslkjcsl', '2018-05-30', '00:00:00', '', 59350, 'g9CqMi8rJSD');
 
 -- --------------------------------------------------------
 
@@ -402,6 +423,13 @@ CREATE TABLE `SelectedOption` (
   `idRcontract` int(11) UNSIGNED NOT NULL,
   `idOption` int(11) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Дамп данных таблицы `SelectedOption`
+--
+
+INSERT INTO `SelectedOption` (`id`, `idRcontract`, `idOption`) VALUES
+(19, 19, 1);
 
 -- --------------------------------------------------------
 
@@ -568,7 +596,7 @@ ALTER TABLE `BrandAuto`
 -- AUTO_INCREMENT для таблицы `client`
 --
 ALTER TABLE `client`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT для таблицы `deposit`
 --
@@ -603,7 +631,7 @@ ALTER TABLE `pages`
 -- AUTO_INCREMENT для таблицы `RentalContract`
 --
 ALTER TABLE `RentalContract`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT для таблицы `reviews`
 --
@@ -613,7 +641,7 @@ ALTER TABLE `reviews`
 -- AUTO_INCREMENT для таблицы `SelectedOption`
 --
 ALTER TABLE `SelectedOption`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT для таблицы `transmission`
 --
