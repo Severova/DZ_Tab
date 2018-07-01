@@ -2,11 +2,13 @@ $(document).ready(function() {
 
     $("#select").change(function(){
         var idBrand = $(this).val();
+        var dates = $('input.lease_ending').val();
+        var datesStart = $('input.lease_start').val();
 
         $.ajax({
             url:"/fastreservation",
             type: "POST",
-            data: {idBrand:idBrand},
+            data: {idBrand:idBrand, start_date:datesStart, ending_date:dates},
             dataType: 'html',
 
             success: function (result) {
@@ -32,6 +34,7 @@ $(document).ready(function() {
                 }
             }
         });
+
     });
 
 });

@@ -10,7 +10,7 @@
             <ul>
                 <?if ($transmission) { ?> <li><span>Коробка передач:</span> <?= $transmission ?></li> <? } ?>
                 <?if ($drivingExperience) { ?> <li><span>Мин. стаж:</span> <?= $drivingExperience ?> лет</li> <? } ?>
-                <div class="js-status" id="auto_<?= str_replace(' ','_',$name) ?>"></div>
+                <?if($status){?><div class="js-status" id="auto_<?= str_replace(' ','_',$name) ?>"><?=$status?></div><?}?>
                 <div class="total-price-block">
                     <p>Итоговая стоимость: </p>
                     <div class="js-total_cost">
@@ -29,7 +29,11 @@
                 <form action="/order/add/<?= str_replace(' ','_',$name) ?>" method="POST">
                     <input type="hidden" value="" name="start_date">
                     <input type="hidden" value="" name="ending_date">
-                    <input type="submit" class="btn" value="Забронировать">
+                    <? if($status == 'арендована') { ?>
+                    <input type="submit" class="btn submit_<?= str_replace(' ','_',$name) ?> disabled" disabled value="Арендована">
+                    <? } else { ?>
+                    <input type="submit" class="btn submit_<?= str_replace(' ','_',$name) ?>" value="Забронировать">
+                    <? } ?>
                 </form>
             </div>
         </div>

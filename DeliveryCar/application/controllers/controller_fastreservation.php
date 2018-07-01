@@ -4,6 +4,7 @@ namespace application\controllers;
 
 use application\core;
 use application\models;
+use DateTime;
 
 class Controller_Fastreservation extends core\Controller{
     public function __construct(){
@@ -12,6 +13,9 @@ class Controller_Fastreservation extends core\Controller{
     function action_index()
     {
         $idBrand = (isset($_POST['idBrand'])) ? (int)$_POST['idBrand'] : 0;
+
+        $endingDate = (isset($_POST['ending_date'])) ? $_POST['ending_date'] : 0;
+        $startDate = (isset($_POST['start_date'])) ? $_POST['start_date'] : 0;
 
         if($idBrand==0){
             $oModel = (models\ModelAuto::findAllObj())->attributes;
@@ -39,6 +43,11 @@ class Controller_Fastreservation extends core\Controller{
                 $oAuto = models\Auto::findLineByCategory('idModel',$value->getId());
             }
 
+            if($endingDate!=0) {
+                $str_to_date = DateTime::createFromFormat('m-d-Y', $endingDate)->format('Y-m-d');
+                $oAuto->StatusAdd($startDate, $str_to_date);
+            }
+
 
             $oItemFastReservations->name = $oAuto->getNameModel();
             $oItemFastReservations->brand = $oAuto->getBrand();
@@ -47,6 +56,7 @@ class Controller_Fastreservation extends core\Controller{
             $oItemFastReservations->transmission = $oAuto->getTransmission();
             $oItemFastReservations->drivingExperience = $oAuto->getDrivingExperience();
             $oItemFastReservations->img = $oAuto->getImg();
+            $oItemFastReservations->status = $oAuto->getStatus();
 
             $out->addItem($oItemFastReservations);
 

@@ -12,6 +12,7 @@ namespace application\core;
  * @property string $transmission
  * @property string $drivingExperience
  * @property string $img
+ * @property string $status
  */
 
 class AutoItemMini extends FastReservation
@@ -27,6 +28,22 @@ class AutoItemMini extends FastReservation
         $this->aParams['transmission'] = '';
         $this->aParams['drivingExperience'] = '';
         $this->aParams['img'] = '';
+        $this->aParams['status'] = '';
+    }
+
+    public function getStatus()
+    {
+        return $this->aParams['status'];
+    }
+
+    /**
+     * @param string $status
+     * @return $this
+     */
+    public function setStatus($status)
+    {
+        $this->aParams['status'] = $status;
+        return $this;
     }
 
     public function setAParams($Params = [])

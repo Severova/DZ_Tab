@@ -1562,7 +1562,9 @@ body {
     -ms-flex-pack: justify;
     justify-content: space-between;
     font-size: 14px;
-    margin-bottom: 5px; }
+    border-bottom: 1px solid rgba(255,255,255, .5);
+    padding: 5px;
+}
 .profile-order__old .profile-order__old-item:first-child {
     font-size: 16px;
     color: #dab627;
@@ -1585,3 +1587,15 @@ body {
     text-decoration: underline; }
 .profile-order__old-btn span:hover {
     color: #fdc516; }
+
+.js-status {
+    display: none;
+}
+
+.car-item__link .btn.disabled {
+    opacity: .5;
+}
+.car-item__link .btn.disabled:hover {
+    background: #fed329;
+    color: #111111;
+}

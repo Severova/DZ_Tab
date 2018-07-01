@@ -23,7 +23,7 @@ class RentalContract extends Model {
         $chars="qazxswedcvfrtgbnhyujmkiolp1234567890QAZXSWEDCVFRTGBNHYUJMKIOLP";
         $max=rand(5, 12);
         $size=StrLen($chars)-1;
-        $password='';
+        $password='p';
 
         while($max--)
             $password.=$chars[rand(0,$size)];

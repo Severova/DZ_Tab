@@ -43,7 +43,7 @@ class Route
                     $params_name = str_replace('_',' ',$routes[3]);
                     $controller->$action($params_name);
                 }else{
-                    if($action_name == 'action_info' || $action_name == 'action_add'){
+                    if($action_name == 'action_info' || $action_name == 'action_add' || $action_name == 'action_information'){
                         Route::ErrorPage404();
                     }else{
                         $controller->$action();

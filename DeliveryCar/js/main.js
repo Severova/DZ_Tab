@@ -39,13 +39,26 @@ $(document).ready(function() {
                 url: "/addarenda",
                 type: "POST",
                 data: {ending_date: dates, lease_start: datesStart},
-                dataType: 'html',
+                dataType: 'json',
 
                 success: function (result) {
-                    console.log(result);
+
                     $('.name_model').each(function () {
                         $names = $(this).html();
                         $("#auto_" + $(this).html().replace(/ /g, "_")).text(result[$names]);
+
+                        if(result[$names] == "арендована") {
+                            $("input.submit_" + $(this).html().replace(/ /g, "_")).attr('disabled', true);
+                            $("input.submit_" + $(this).html().replace(/ /g, "_")).addClass('disabled');
+                            $("input.submit_" + $(this).html().replace(/ /g, "_")).val('Арендована');
+                            //$("#auto_" + $(this).html().replace(/ /g, "_")).addClass('red');
+                        }
+                        if(result[$names] == "свободна") {
+                            $("input.submit_" + $(this).html().replace(/ /g, "_")).attr('disabled', false);
+                            $("input.submit_" + $(this).html().replace(/ /g, "_")).removeClass('disabled');
+                            $("input.submit_" + $(this).html().replace(/ /g, "_")).val('Забронировать');
+                            //$("#auto_" + $(this).html().replace(/ /g, "_")).removeClass('red');
+                        }
                     });
                 }
 
@@ -220,6 +233,23 @@ $(document).ready(function() {
         var currentBlock = $('.profile-order__old');
 
         currentBlock.slideToggle("slow")
+    });
+
+    $("#ajax_form").submit(function() {
+        var form_data = $(this).serialize();
+        $.ajax({
+            type: "POST",
+            url: "sendmail.php",
+            data: form_data,
+            success: function(result){
+                jQuery('#ajax_form')[0].reset();
+                $('#ajax_form .thank').fadeIn();
+
+                setInterval(function(){
+                    $('#ajax_form .thank').fadeOut();
+                }, 3000);
+            }
+        });
     });
 	
 });

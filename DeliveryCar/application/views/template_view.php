@@ -98,9 +98,13 @@
         Заказать звонок
     </div>
     <div class="popup-form__content">
-        <input type="text" class="form-input" placeholder="Укажите ваше имя*">
-        <input type="tel" class="form-input" placeholder="Укажите номер телефона*">
-        <input type="submit" class="btn">
+        <form method="post" id="ajax_form" action="javascript:void(null)">
+            <input type="text" class="form-input" placeholder="Укажите ваше имя*" name="name" required>
+            <input type="tel" class="form-input" placeholder="Укажите номер телефона*" name="phone" required>
+            <input type="submit" class="btn">
+            <p class="thank" style="display: none;">Спасибо за обращение!</p>
+        </form>
+
     </div>
 </div>
 <div class="hidden"></div>
